@@ -1,0 +1,11 @@
+{
+  "name": "PIP BOY 1998",
+  "short_name": "PIP BOY 1998",
+  "description": "Personal PIP-BOY planning and profiling system.",
+  "start_url": "./index.html",
+  "display": "standalone",
+  "background_color": "#050805",
+  "theme_color": "#071007",
+  "orientation": "any",
+  "icons": []
+}
