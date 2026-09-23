@@ -1,0 +1,3993 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport"
+      content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no,viewport-fit=cover">
+
+<meta name="theme-color" content="#07100b">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="PIP BOY 1998">
+<meta name="mobile-web-app-capable" content="yes">
+
+<link rel="manifest" href="./manifest.webmanifest">
+
+<title>PIP BOY 1998</title>
+
+<style>
+:root{
+    --bg:#050b07;
+    --panel:#09140d;
+    --panel2:#0c1b11;
+    --line:#1c4227;
+    --line2:#326d3f;
+
+    --green:#63ff82;
+    --green2:#35c85a;
+    --green3:#1b7b34;
+
+    --text:#b9ffc5;
+    --muted:#6fa17a;
+
+    --yellow:#e5ff55;
+    --red:#ff6258;
+
+    --shadow:0 0 18px rgba(74,255,113,.08);
+}
+
+*{
+    box-sizing:border-box;
+    -webkit-tap-highlight-color:transparent;
+}
+
+html,
+body{
+    margin:0;
+    min-height:100%;
+    width:100%;
+    background:
+        radial-gradient(circle at 50% 0%,rgba(50,150,70,.09),transparent 45%),
+        var(--bg);
+    color:var(--text);
+    font-family:Menlo,Monaco,"Courier New",monospace;
+}
+
+body{
+    overflow-x:hidden;
+    padding-bottom:env(safe-area-inset-bottom);
+}
+
+body:before{
+    content:"";
+    position:fixed;
+    inset:0;
+    pointer-events:none;
+    z-index:9999;
+    background:
+        repeating-linear-gradient(
+            to bottom,
+            rgba(255,255,255,.012) 0,
+            rgba(255,255,255,.012) 1px,
+            transparent 1px,
+            transparent 4px
+        );
+    opacity:.2;
+}
+
+button,
+input,
+textarea,
+select{
+    font:inherit;
+}
+
+button{
+    -webkit-appearance:none;
+}
+
+.header{
+    height:70px;
+    border-bottom:1px solid var(--line);
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    padding:
+        env(safe-area-inset-top)
+        22px
+        0 22px;
+    background:rgba(4,11,7,.96);
+    position:sticky;
+    top:0;
+    z-index:100;
+}
+
+.logo{
+    display:flex;
+    align-items:center;
+    gap:13px;
+}
+
+.logo-mark{
+    width:40px;
+    height:40px;
+    border:2px solid var(--green);
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    color:var(--green);
+    font-size:21px;
+    box-shadow:0 0 12px rgba(99,255,130,.18);
+}
+
+.logo-title{
+    font-size:17px;
+    letter-spacing:3px;
+    color:var(--green);
+    font-weight:bold;
+}
+
+.logo-sub{
+    font-size:9px;
+    color:var(--muted);
+    margin-top:3px;
+    letter-spacing:1px;
+}
+
+.clock{
+    text-align:right;
+    color:var(--green);
+    font-size:13px;
+}
+
+.clock small{
+    display:block;
+    color:var(--muted);
+    font-size:9px;
+    margin-top:3px;
+}
+
+.nav{
+    display:flex;
+    border-bottom:1px solid var(--line);
+    background:#07120b;
+    overflow-x:auto;
+    scrollbar-width:none;
+    position:sticky;
+    top:70px;
+    z-index:90;
+}
+
+.nav::-webkit-scrollbar{
+    display:none;
+}
+
+.nav button{
+    flex:0 0 auto;
+    background:transparent;
+    color:var(--muted);
+    border:0;
+    border-right:1px solid var(--line);
+    padding:13px 19px;
+    min-height:43px;
+    font-size:10px;
+    letter-spacing:1.5px;
+    cursor:pointer;
+    white-space:nowrap;
+}
+
+.nav button.active{
+    color:var(--green);
+    background:rgba(99,255,130,.07);
+    box-shadow:inset 0 -2px 0 var(--green);
+}
+
+main{
+    max-width:1500px;
+    margin:auto;
+    padding:20px;
+}
+
+.screen{
+    display:none;
+}
+
+.screen.active{
+    display:block;
+}
+
+.screen-header{
+    display:flex;
+    align-items:flex-end;
+    justify-content:space-between;
+    gap:18px;
+    margin-bottom:18px;
+}
+
+.screen-title{
+    color:var(--green);
+    font-size:20px;
+    letter-spacing:3px;
+}
+
+.screen-description{
+    color:var(--muted);
+    font-size:9px;
+    margin-top:7px;
+}
+
+.actions{
+    display:flex;
+    gap:7px;
+    flex-wrap:wrap;
+}
+
+.btn{
+    border:1px solid var(--line2);
+    background:#0b1a10;
+    color:var(--green);
+    padding:9px 13px;
+    min-height:36px;
+    font-size:10px;
+    letter-spacing:1px;
+    cursor:pointer;
+}
+
+.btn:hover,
+.btn:active{
+    background:#132a19;
+    border-color:var(--green);
+}
+
+.btn.primary{
+    border-color:var(--green);
+    background:rgba(99,255,130,.08);
+}
+
+.btn.danger{
+    color:var(--red);
+    border-color:#6e2925;
+}
+
+.panel{
+    border:1px solid var(--line);
+    background:var(--panel);
+    box-shadow:var(--shadow);
+}
+
+.panel-header{
+    padding:11px 13px;
+    border-bottom:1px solid var(--line);
+    color:var(--green);
+    font-size:9px;
+    letter-spacing:1.5px;
+    display:flex;
+    justify-content:space-between;
+    gap:10px;
+}
+
+.panel-body{
+    padding:13px;
+}
+
+.empty{
+    padding:35px 15px;
+    text-align:center;
+    color:var(--muted);
+    font-size:10px;
+    line-height:1.8;
+}
+
+input,
+textarea,
+select{
+    width:100%;
+    border:1px solid var(--line);
+    background:#050e08;
+    color:var(--text);
+    padding:10px;
+    outline:none;
+    border-radius:0;
+}
+
+input:focus,
+textarea:focus,
+select:focus{
+    border-color:var(--green2);
+}
+
+textarea{
+    min-height:100px;
+    resize:vertical;
+}
+
+.form-grid{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:12px;
+}
+
+.form-group{
+    margin-bottom:11px;
+}
+
+.form-group.full{
+    grid-column:1/-1;
+}
+
+label{
+    display:block;
+    color:var(--muted);
+    font-size:8px;
+    letter-spacing:1px;
+    margin-bottom:6px;
+}
+
+/* QUESTS */
+
+.quest-layout{
+    display:grid;
+    grid-template-columns:310px 1fr;
+    gap:16px;
+    min-height:600px;
+}
+
+.quest-list-panel{
+    min-width:0;
+}
+
+.quest-list{
+    padding:8px;
+    max-height:calc(100vh - 210px);
+    min-height:430px;
+    overflow:auto;
+}
+
+.quest-row{
+    display:flex;
+    align-items:center;
+    gap:9px;
+    padding:11px 8px;
+    border-bottom:1px solid #14321e;
+    cursor:pointer;
+    transition:.12s;
+}
+
+.quest-row:hover,
+.quest-row.selected{
+    background:rgba(99,255,130,.07);
+}
+
+.quest-status{
+    width:8px;
+    height:8px;
+    border:1px solid var(--green2);
+    flex:none;
+}
+
+.quest-row.active .quest-status{
+    background:var(--green);
+    box-shadow:0 0 7px rgba(99,255,130,.5);
+}
+
+.quest-row.completed .quest-status{
+    background:#42634a;
+    border-color:#42634a;
+}
+
+.quest-row.inactive .quest-status{
+    border-color:#42634a;
+}
+
+.quest-name{
+    color:var(--text);
+    font-size:10px;
+    line-height:1.45;
+    flex:1;
+}
+
+.quest-row.completed .quest-name{
+    color:#52745a;
+    text-decoration:line-through;
+}
+
+.quest-preview{
+    min-width:0;
+}
+
+.quest-preview-inner{
+    min-height:560px;
+    display:flex;
+    flex-direction:column;
+}
+
+.quest-preview-content{
+    display:grid;
+    grid-template-columns:minmax(280px,44%) 1fr;
+    gap:20px;
+    align-items:stretch;
+    flex:1;
+}
+
+.quest-image{
+    position:relative;
+    min-height:390px;
+    border:1px solid var(--line2);
+    background:#061009;
+    overflow:hidden;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+}
+
+.quest-image img{
+    width:100%;
+    height:100%;
+    object-fit:cover;
+    display:block;
+}
+
+.quest-placeholder{
+    color:#2f6840;
+    text-align:center;
+    padding:20px;
+}
+
+.quest-placeholder .vault-symbol{
+    font-size:76px;
+    line-height:1;
+    color:var(--green3);
+    text-shadow:0 0 16px rgba(99,255,130,.15);
+}
+
+.quest-placeholder div:last-child{
+    margin-top:12px;
+    font-size:8px;
+    letter-spacing:2px;
+}
+
+.quest-description{
+    display:flex;
+    flex-direction:column;
+    min-width:0;
+}
+
+.quest-title{
+    color:var(--green);
+    font-size:23px;
+    letter-spacing:2px;
+    line-height:1.25;
+    margin-bottom:13px;
+}
+
+.quest-status-line{
+    color:var(--muted);
+    font-size:8px;
+    letter-spacing:1px;
+    margin-bottom:20px;
+}
+
+.quest-short-description{
+    color:var(--text);
+    font-size:11px;
+    line-height:1.8;
+    white-space:pre-wrap;
+    flex:1;
+}
+
+.quest-preview-actions{
+    display:flex;
+    gap:7px;
+    flex-wrap:wrap;
+    margin-top:18px;
+}
+
+.quest-preview-footer{
+    margin-top:15px;
+    padding-top:11px;
+    border-top:1px solid var(--line);
+    display:flex;
+    justify-content:space-between;
+    color:var(--muted);
+    font-size:8px;
+}
+
+/* QUEST DATA */
+
+.quest-data-grid{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:16px;
+}
+
+.quest-data-grid .wide{
+    grid-column:1/-1;
+}
+
+/* INVENTORY */
+
+.inventory-tabs{
+    display:flex;
+    gap:5px;
+    overflow:auto;
+    margin-bottom:13px;
+}
+
+.inventory-tab{
+    background:#08140c;
+    border:1px solid var(--line);
+    color:var(--muted);
+    padding:9px 14px;
+    font-size:9px;
+    letter-spacing:1px;
+    white-space:nowrap;
+}
+
+.inventory-tab.active{
+    color:var(--green);
+    border-color:var(--green2);
+    background:rgba(99,255,130,.06);
+}
+
+.inventory-add{
+    display:flex;
+    gap:7px;
+    margin-bottom:10px;
+}
+
+.inventory-add input{
+    flex:1;
+}
+
+.inventory-item{
+    display:grid;
+    grid-template-columns:1fr 130px 80px 25px;
+    gap:8px;
+    align-items:center;
+    border-bottom:1px solid #16341f;
+    padding:10px 2px;
+}
+
+.inventory-item-name{
+    font-size:10px;
+}
+
+.inventory-condition{
+    color:var(--muted);
+    font-size:8px;
+}
+
+.condition-bar{
+    height:4px;
+    border:1px solid var(--line2);
+    margin-top:4px;
+}
+
+.condition-fill{
+    height:100%;
+    background:var(--green2);
+}
+
+.inventory-item input[type=number]{
+    padding:7px;
+}
+
+.item-delete{
+    background:none;
+    border:0;
+    color:var(--muted);
+    font-size:15px;
+    cursor:pointer;
+}
+
+.system-transfer{
+    margin-top:16px;
+    opacity:.85;
+}
+
+.system-transfer .panel-body{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:10px;
+}
+
+.transfer-buttons{
+    display:flex;
+    gap:6px;
+}
+
+/* STATS */
+
+.stats-grid{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:16px;
+}
+
+.bigfive-wrap{
+    display:grid;
+    grid-template-columns:300px 1fr;
+    gap:20px;
+    align-items:center;
+}
+
+.radar{
+    width:100%;
+    max-width:300px;
+    display:block;
+}
+
+.trait-row{
+    margin-bottom:13px;
+}
+
+.trait-head{
+    display:flex;
+    justify-content:space-between;
+    color:var(--text);
+    font-size:9px;
+    margin-bottom:5px;
+}
+
+.trait-slider{
+    width:100%;
+    accent-color:var(--green);
+}
+
+.meta-list{
+    display:grid;
+    gap:14px;
+}
+
+.meta-row{
+    border-bottom:1px solid #15351f;
+    padding-bottom:12px;
+}
+
+.meta-labels{
+    display:flex;
+    justify-content:space-between;
+    color:var(--muted);
+    font-size:8px;
+    margin-bottom:6px;
+}
+
+.meta-slider{
+    width:100%;
+    accent-color:var(--green);
+}
+
+.triangle-wrap{
+    max-width:500px;
+    margin:auto;
+}
+
+.triangle-svg{
+    width:100%;
+    height:auto;
+}
+
+.triangle-input{
+    margin-top:9px;
+}
+
+/* HEALTH */
+
+.health-layout{
+    display:grid;
+    grid-template-columns:minmax(380px,560px) 1fr;
+    gap:16px;
+}
+
+.health-figure-panel{
+    min-height:700px;
+}
+
+.health-figure{
+    position:relative;
+    height:620px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+}
+
+.body-svg{
+    width:min(100%,480px);
+    height:100%;
+    overflow:visible;
+}
+
+.body-zone{
+    cursor:pointer;
+    transition:.18s;
+}
+
+.body-zone path,
+.body-zone ellipse,
+.body-zone rect,
+.body-zone circle{
+    fill:#173520;
+    stroke:#3e8950;
+    stroke-width:1.5;
+    transition:.18s;
+}
+
+.body-zone:hover path,
+.body-zone:hover ellipse,
+.body-zone:hover rect,
+.body-zone:hover circle{
+    fill:#285936;
+    stroke:var(--green);
+    filter:drop-shadow(0 0 5px rgba(99,255,130,.3));
+}
+
+.body-zone.warn path,
+.body-zone.warn ellipse,
+.body-zone.warn rect,
+.body-zone.warn circle{
+    fill:#5b6022;
+    stroke:var(--yellow);
+    filter:drop-shadow(0 0 5px rgba(229,255,85,.18));
+}
+
+.body-zone.danger path,
+.body-zone.danger ellipse,
+.body-zone.danger rect,
+.body-zone.danger circle{
+    fill:#612821;
+    stroke:var(--red);
+    filter:drop-shadow(0 0 7px rgba(255,98,88,.22));
+}
+
+.body-outline{
+    fill:#0c2112;
+    stroke:#5aaf67;
+    stroke-width:2;
+}
+
+.body-face{
+    fill:#102c18;
+    stroke:#5aaf67;
+    stroke-width:2;
+}
+
+.body-detail{
+    stroke:#4e9959;
+    fill:none;
+    stroke-width:1.5;
+}
+
+.health-label{
+    fill:var(--muted);
+    font-family:Menlo,Monaco,"Courier New",monospace;
+    font-size:10px;
+    letter-spacing:1px;
+    pointer-events:none;
+}
+
+.health-side{
+    display:flex;
+    flex-direction:column;
+    gap:12px;
+}
+
+.health-zone-list{
+    display:grid;
+    gap:7px;
+}
+
+.health-zone-card{
+    border:1px solid var(--line);
+    background:#08140c;
+    padding:10px;
+    cursor:pointer;
+}
+
+.health-zone-card:hover{
+    border-color:var(--green2);
+}
+
+.health-zone-top{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+}
+
+.health-zone-name{
+    color:var(--text);
+    font-size:9px;
+    letter-spacing:1px;
+}
+
+.health-zone-count{
+    font-size:8px;
+}
+
+.health-zone-card.good .health-zone-count{
+    color:var(--green);
+}
+
+.health-zone-card.warn .health-zone-count{
+    color:var(--yellow);
+}
+
+.health-zone-card.danger .health-zone-count{
+    color:var(--red);
+}
+
+.health-entry{
+    display:grid;
+    grid-template-columns:1fr 70px;
+    gap:8px;
+    align-items:center;
+    border-bottom:1px solid #16341f;
+    padding:9px 0;
+}
+
+.health-entry-text{
+    font-size:9px;
+    line-height:1.5;
+}
+
+.health-entry-actions{
+    display:flex;
+    justify-content:flex-end;
+    gap:4px;
+}
+
+/* NOTES */
+
+.notes-layout{
+    display:grid;
+    grid-template-columns:310px 1fr;
+    gap:16px;
+    min-height:600px;
+}
+
+.notes-list{
+    max-height:650px;
+    overflow:auto;
+}
+
+.note-row{
+    border-bottom:1px solid #14321e;
+    padding:12px;
+    cursor:pointer;
+}
+
+.note-row:hover,
+.note-row.selected{
+    background:rgba(99,255,130,.06);
+}
+
+.note-row-title{
+    color:var(--text);
+    font-size:10px;
+    line-height:1.4;
+}
+
+.note-row-preview{
+    color:var(--muted);
+    font-size:8px;
+    line-height:1.5;
+    margin-top:5px;
+}
+
+.note-reader{
+    min-height:600px;
+}
+
+.note-reader-title{
+    color:var(--green);
+    font-size:20px;
+    letter-spacing:2px;
+    margin-bottom:15px;
+}
+
+.note-reader-body{
+    white-space:pre-wrap;
+    color:var(--text);
+    font-size:11px;
+    line-height:1.8;
+}
+
+/* MODAL */
+
+.modal-backdrop{
+    display:none;
+    position:fixed;
+    inset:0;
+    z-index:1000;
+    background:rgba(0,0,0,.8);
+    align-items:center;
+    justify-content:center;
+    padding:20px;
+}
+
+.modal-backdrop.open{
+    display:flex;
+}
+
+.modal{
+    width:min(720px,100%);
+    max-height:90vh;
+    overflow:auto;
+    border:1px solid var(--green3);
+    background:#07120b;
+    box-shadow:0 0 35px rgba(0,0,0,.8);
+}
+
+.modal-header{
+    padding:13px 15px;
+    border-bottom:1px solid var(--line);
+    display:flex;
+    justify-content:space-between;
+}
+
+.modal-title{
+    color:var(--green);
+    font-size:11px;
+    letter-spacing:2px;
+}
+
+.modal-close{
+    background:none;
+    border:0;
+    color:var(--muted);
+    cursor:pointer;
+    font-size:18px;
+}
+
+.modal-body{
+    padding:15px;
+}
+
+.modal-footer{
+    padding:12px 15px;
+    border-top:1px solid var(--line);
+    display:flex;
+    justify-content:space-between;
+    gap:8px;
+}
+
+.modal-footer-right{
+    margin-left:auto;
+    display:flex;
+    gap:7px;
+}
+
+.image-upload{
+    border:1px dashed var(--line2);
+    padding:12px;
+}
+
+.image-upload-preview{
+    max-height:170px;
+    max-width:100%;
+    display:block;
+    margin-top:10px;
+    object-fit:contain;
+}
+
+.toast{
+    position:fixed;
+    right:20px;
+    bottom:20px;
+    z-index:2000;
+    border:1px solid var(--green2);
+    background:#08150c;
+    color:var(--green);
+    padding:11px 15px;
+    font-size:10px;
+    opacity:0;
+    transform:translateY(10px);
+    transition:.2s;
+    pointer-events:none;
+}
+
+.toast.show{
+    opacity:1;
+    transform:translateY(0);
+}
+
+/* MOBILE / IPHONE */
+
+@media(max-width:950px){
+    .quest-layout,
+    .notes-layout,
+    .health-layout{
+        grid-template-columns:1fr;
+    }
+
+    .quest-list{
+        max-height:270px;
+        min-height:0;
+    }
+
+    .health-figure-panel{
+        min-height:560px;
+    }
+
+    .health-figure{
+        height:520px;
+    }
+
+    .stats-grid{
+        grid-template-columns:1fr;
+    }
+
+    .bigfive-wrap{
+        grid-template-columns:250px 1fr;
+    }
+}
+
+@media(max-width:700px){
+    .header{
+        height:62px;
+        padding-left:10px;
+        padding-right:10px;
+    }
+
+    .logo-mark{
+        width:34px;
+        height:34px;
+        font-size:18px;
+    }
+
+    .logo-title{
+        font-size:11px;
+        letter-spacing:2px;
+    }
+
+    .logo-sub{
+        display:none;
+    }
+
+    .clock{
+        font-size:10px;
+    }
+
+    .nav{
+        top:62px;
+    }
+
+    .nav button{
+        padding:11px 13px;
+        font-size:8px;
+    }
+
+    main{
+        padding:10px;
+    }
+
+    .screen-header{
+        align-items:flex-start;
+        flex-direction:column;
+    }
+
+    .screen-title{
+        font-size:17px;
+    }
+
+    .quest-preview-content{
+        grid-template-columns:1fr;
+    }
+
+    .quest-image{
+        min-height:260px;
+        max-height:330px;
+    }
+
+    .quest-preview-inner{
+        min-height:0;
+    }
+
+    .quest-title{
+        font-size:18px;
+    }
+
+    .quest-data-grid{
+        grid-template-columns:1fr;
+    }
+
+    .quest-data-grid .wide{
+        grid-column:auto;
+    }
+
+    .inventory-item{
+        grid-template-columns:1fr 90px 25px;
+    }
+
+    .inventory-condition{
+        display:none;
+    }
+
+    .bigfive-wrap{
+        grid-template-columns:1fr;
+    }
+
+    .radar{
+        margin:auto;
+    }
+
+    .form-grid{
+        grid-template-columns:1fr;
+    }
+
+    .form-group.full{
+        grid-column:auto;
+    }
+
+    .health-figure{
+        height:470px;
+    }
+
+    .health-figure-panel{
+        min-height:510px;
+    }
+
+    .system-transfer .panel-body{
+        align-items:flex-start;
+        flex-direction:column;
+    }
+}
+
+/* LANDSCAPE IPHONE */
+@media(max-height:500px) and (orientation:landscape){
+    .header{
+        height:50px;
+    }
+
+    .nav{
+        top:50px;
+    }
+
+    .nav button{
+        min-height:34px;
+        padding:8px 13px;
+    }
+
+    main{
+        padding:9px;
+    }
+
+    .quest-layout{
+        grid-template-columns:260px 1fr;
+        min-height:calc(100vh - 120px);
+    }
+
+    .quest-list{
+        max-height:calc(100vh - 155px);
+        min-height:0;
+    }
+
+    .quest-preview-inner{
+        min-height:calc(100vh - 155px);
+    }
+
+    .quest-image{
+        min-height:250px;
+    }
+
+    .health-layout{
+        grid-template-columns:400px 1fr;
+    }
+
+    .health-figure{
+        height:430px;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<header class="header">
+    <div class="logo">
+        <div class="logo-mark">P</div>
+        <div>
+            <div class="logo-title">PIP BOY 1998</div>
+            <div class="logo-sub">PERSONAL OPERATING SYSTEM // LOCAL INSTANCE</div>
+        </div>
+    </div>
+
+    <div class="clock">
+        <div id="clock">--:--:--</div>
+        <small id="date">----</small>
+    </div>
+</header>
+
+<nav class="nav">
+    <button class="nav-btn active" data-screen="quests">01 // QUESTS</button>
+    <button class="nav-btn" data-screen="questdata">02 // QUEST DATA</button>
+    <button class="nav-btn" data-screen="inventory">03 // INVENTORY</button>
+    <button class="nav-btn" data-screen="stats">04 // STATS</button>
+    <button class="nav-btn" data-screen="health">05 // HEALTH</button>
+    <button class="nav-btn" data-screen="notes">06 // NOTES</button>
+</nav>
+
+<main>
+
+<!-- QUESTS -->
+<section id="screen-quests" class="screen active">
+
+    <div class="screen-header">
+        <div>
+            <div class="screen-title">QUESTS</div>
+            <div class="screen-description">CURRENT OBJECTIVES AND PERSONAL MISSIONS</div>
+        </div>
+
+        <div class="actions">
+            <button class="btn primary" onclick="openQuestModal()">+ NEW QUEST</button>
+            <button class="btn" id="editQuestTopBtn" onclick="editSelectedQuest()" disabled>EDIT QUEST</button>
+        </div>
+    </div>
+
+    <div class="quest-layout">
+
+        <div class="panel quest-list-panel">
+            <div class="panel-header">
+                <span>QUEST LOG</span>
+                <span id="questCounter">0</span>
+            </div>
+
+            <div class="quest-list" id="questList"></div>
+        </div>
+
+        <div class="panel quest-preview">
+            <div class="panel-header">
+                <span>SELECTED QUEST</span>
+                <span id="questPreviewStatus">NONE</span>
+            </div>
+
+            <div class="panel-body quest-preview-inner" id="questPreview">
+                <div class="empty">SELECT A QUEST</div>
+            </div>
+        </div>
+
+    </div>
+</section>
+
+<!-- QUEST DATA -->
+<section id="screen-questdata" class="screen">
+
+    <div class="screen-header">
+        <div>
+            <div class="screen-title">QUEST DATA</div>
+            <div class="screen-description">DETAILED INFORMATION FOR THE SELECTED OBJECTIVE</div>
+        </div>
+    </div>
+
+    <div id="questDataContent"></div>
+
+</section>
+
+<!-- INVENTORY -->
+<section id="screen-inventory" class="screen">
+
+    <div class="screen-header">
+        <div>
+            <div class="screen-title">INVENTORY</div>
+            <div class="screen-description">ITEMS, MONEY, DOCUMENTS AND MEDICINE</div>
+        </div>
+    </div>
+
+    <div class="inventory-tabs">
+        <button class="inventory-tab active" data-category="items">ITEMS</button>
+        <button class="inventory-tab" data-category="money">MONEY</button>
+        <button class="inventory-tab" data-category="doc">DOC</button>
+        <button class="inventory-tab" data-category="medicine">MEDICINE</button>
+    </div>
+
+    <div id="inventoryContent"></div>
+
+    <div class="panel system-transfer">
+        <div class="panel-header">
+            <span>SYSTEM // DATA TRANSFER</span>
+            <span>BACKUP</span>
+        </div>
+
+        <div class="panel-body">
+            <div style="font-size:8px;color:var(--muted);line-height:1.6">
+                EXPORT OR RESTORE COMPLETE PIP-BOY DATA
+            </div>
+
+            <div class="transfer-buttons">
+                <button class="btn" onclick="exportData()">EXPORT</button>
+                <button class="btn" onclick="document.getElementById('importFile').click()">IMPORT</button>
+                <input
+                    type="file"
+                    id="importFile"
+                    accept=".json,application/json"
+                    style="display:none"
+                >
+            </div>
+        </div>
+    </div>
+
+</section>
+
+<!-- STATS -->
+<section id="screen-stats" class="screen">
+
+    <div class="screen-header">
+        <div>
+            <div class="screen-title">STATS</div>
+            <div class="screen-description">PERSONAL PARAMETERS // WORKING PROFILE</div>
+        </div>
+    </div>
+
+    <div class="stats-grid">
+
+        <div class="panel">
+            <div class="panel-header">
+                <span>BIG FIVE</span>
+                <span>0 — 100</span>
+            </div>
+
+            <div class="panel-body">
+                <div class="bigfive-wrap">
+                    <svg id="radar" class="radar" viewBox="0 0 300 280"></svg>
+                    <div id="bigFiveControls"></div>
+                </div>
+            </div>
+        </div>
+
+        <div class="panel">
+            <div class="panel-header">
+                <span>METAPROGRAMS</span>
+                <span>8 AXES</span>
+            </div>
+
+            <div class="panel-body">
+                <div class="meta-list" id="metaPrograms"></div>
+            </div>
+        </div>
+
+        <div class="panel">
+            <div class="panel-header">
+                <span>PERSONAL CONTRADICTIONS</span>
+                <span>TRIANGLE</span>
+            </div>
+
+            <div class="panel-body">
+                <div class="triangle-wrap">
+
+                    <svg class="triangle-svg" viewBox="0 0 500 400">
+                        <polygon
+                            points="250,35 70,340 430,340"
+                            fill="#08170d"
+                            stroke="#356b43"
+                            stroke-width="2"
+                        />
+
+                        <line
+                            x1="250" y1="35"
+                            x2="250" y2="340"
+                            stroke="#1d4829"
+                        />
+
+                        <line
+                            x1="70" y1="340"
+                            x2="430" y2="340"
+                            stroke="#1d4829"
+                        />
+
+                        <text
+                            x="250"
+                            y="22"
+                            fill="#63ff82"
+                            text-anchor="middle"
+                            font-size="13"
+                            font-family="monospace"
+                            letter-spacing="2"
+                        >SACRED WOUND</text>
+
+                        <text
+                            x="65"
+                            y="365"
+                            fill="#6fa17a"
+                            text-anchor="start"
+                            font-size="10"
+                            font-family="monospace"
+                        >CONTRADICTION A</text>
+
+                        <text
+                            x="435"
+                            y="365"
+                            fill="#6fa17a"
+                            text-anchor="end"
+                            font-size="10"
+                            font-family="monospace"
+                        >CONTRADICTION B</text>
+                    </svg>
+
+                    <div class="form-group">
+                        <label>SACRED WOUND</label>
+                        <textarea
+                            id="sacredWound"
+                            placeholder="Core vulnerability / sensitive point..."
+                        ></textarea>
+                    </div>
+
+                    <div class="form-group">
+                        <label>CONTRADICTION A</label>
+                        <textarea
+                            id="contradictionA"
+                            placeholder="Basic contradiction..."
+                        ></textarea>
+                    </div>
+
+                    <div class="form-group">
+                        <label>CONTRADICTION B</label>
+                        <textarea
+                            id="contradictionB"
+                            placeholder="Basic contradiction..."
+                        ></textarea>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+    </div>
+</section>
+
+<!-- HEALTH -->
+<section id="screen-health" class="screen">
+
+    <div class="screen-header">
+        <div>
+            <div class="screen-title">HEALTH</div>
+            <div class="screen-description">PHYSICAL STATUS // SELECT A BODY ZONE TO LOG A CONDITION</div>
+        </div>
+    </div>
+
+    <div class="health-layout">
+
+        <div class="panel health-figure-panel">
+
+            <div class="panel-header">
+                <span>PHYSIOLOGICAL STATUS</span>
+                <span id="healthOverallStatus">NOMINAL</span>
+            </div>
+
+            <div class="panel-body">
+
+                <div class="health-figure">
+
+                    <svg
+                        class="body-svg"
+                        viewBox="0 0 500 650"
+                        id="bodySvg"
+                    >
+
+                        <!-- torso -->
+                        <path
+                            class="body-outline"
+                            d="
+                            M205 200
+                            C170 220 155 270 160 335
+                            L178 450
+                            L225 450
+                            L250 420
+                            L275 450
+                            L322 450
+                            L340 335
+                            C345 270 330 220 295 200
+                            Z"
+                        />
+
+                        <!-- head -->
+                        <g class="body-zone" data-zone="head" onclick="openHealthZone('head')">
+                            <ellipse
+                                class="body-face"
+                                cx="250"
+                                cy="120"
+                                rx="62"
+                                ry="76"
+                            />
+                            <path
+                                class="body-detail"
+                                d="M215 112 Q230 102 242 112 M258 112 Q270 102 285 112"
+                            />
+                            <path
+                                class="body-detail"
+                                d="M235 145 Q250 153 265 145"
+                            />
+                        </g>
+
+                        <!-- eyes -->
+                        <g class="body-zone" data-zone="eyes" onclick="openHealthZone('eyes')">
+                            <ellipse cx="224" cy="120" rx="12" ry="8"/>
+                            <ellipse cx="276" cy="120" rx="12" ry="8"/>
+                        </g>
+
+                        <!-- chest -->
+                        <g class="body-zone" data-zone="chest" onclick="openHealthZone('chest')">
+                            <path d="
+                                M195 220
+                                Q250 250 305 220
+                                L318 330
+                                Q250 355 182 330
+                                Z"
+                            />
+                        </g>
+
+                        <!-- abdomen -->
+                        <g class="body-zone" data-zone="abdomen" onclick="openHealthZone('abdomen')">
+                            <path d="
+                                M184 330
+                                Q250 350 316 330
+                                L322 430
+                                Q250 450 178 430
+                                Z"
+                            />
+                        </g>
+
+                        <!-- left arm -->
+                        <g class="body-zone" data-zone="leftArm" onclick="openHealthZone('leftArm')">
+                            <path d="
+                                M188 215
+                                C160 220 130 250 112 285
+                                L78 375
+                                L110 390
+                                L165 310
+                                L205 255
+                                Z"
+                            />
+                            <circle cx="96" cy="382" r="18"/>
+                        </g>
+
+                        <!-- right arm -->
+                        <g class="body-zone" data-zone="rightArm" onclick="openHealthZone('rightArm')">
+                            <path d="
+                                M312 215
+                                C340 220 370 250 388 285
+                                L422 375
+                                L390 390
+                                L335 310
+                                L295 255
+                                Z"
+                            />
+                            <circle cx="404" cy="382" r="18"/>
+                        </g>
+
+                        <!-- left leg -->
+                        <g class="body-zone" data-zone="leftLeg" onclick="openHealthZone('leftLeg')">
+                            <path d="
+                                M180 420
+                                L245 420
+                                L235 560
+                                L220 625
+                                L175 625
+                                L185 555
+                                Z"
+                            />
+                        </g>
+
+                        <!-- right leg -->
+                        <g class="body-zone" data-zone="rightLeg" onclick="openHealthZone('rightLeg')">
+                            <path d="
+                                M255 420
+                                L320 420
+                                L315 555
+                                L325 625
+                                L280 625
+                                L265 560
+                                Z"
+                            />
+                        </g>
+
+                        <!-- body lines -->
+                        <path
+                            class="body-detail"
+                            d="M250 195 L250 420"
+                        />
+
+                        <text class="health-label" x="250" y="95" text-anchor="middle">
+                            HEAD
+                        </text>
+
+                        <text class="health-label" x="250" y="292" text-anchor="middle">
+                            CHEST
+                        </text>
+
+                        <text class="health-label" x="250" y="388" text-anchor="middle">
+                            ABDOMEN
+                        </text>
+
+                        <text class="health-label" x="100" y="430" text-anchor="middle">
+                            ARM
+                        </text>
+
+                        <text class="health-label" x="400" y="430" text-anchor="middle">
+                            ARM
+                        </text>
+
+                        <text class="health-label" x="205" y="595" text-anchor="middle">
+                            LEG
+                        </text>
+
+                        <text class="health-label" x="295" y="595" text-anchor="middle">
+                            LEG
+                        </text>
+
+                    </svg>
+
+                </div>
+
+            </div>
+        </div>
+
+        <div class="health-side">
+
+            <div class="panel">
+                <div class="panel-header">
+                    <span>BODY ZONES</span>
+                    <span id="healthCount">0 MARKS</span>
+                </div>
+
+                <div class="panel-body">
+                    <div class="health-zone-list" id="healthZoneList"></div>
+                </div>
+            </div>
+
+            <div class="panel">
+                <div class="panel-header">
+                    <span>STATUS LOGIC</span>
+                    <span>LOCAL</span>
+                </div>
+
+                <div class="panel-body">
+                    <div style="font-size:9px;color:var(--muted);line-height:1.8">
+                        <span style="color:var(--green)">GREEN</span>
+                        — NO RECORDED ISSUES<br>
+                        <span style="color:var(--yellow)">YELLOW</span>
+                        — 1–2 RECORDS<br>
+                        <span style="color:var(--red)">RED</span>
+                        — 3+ RECORDS
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+</section>
+
+<!-- NOTES -->
+<section id="screen-notes" class="screen">
+
+    <div class="screen-header">
+        <div>
+            <div class="screen-title">NOTES</div>
+            <div class="screen-description">PERSONAL KNOWLEDGE // THOUGHTS // REFERENCES</div>
+        </div>
+
+        <div class="actions">
+            <button class="btn primary" onclick="openNoteModal()">+ NEW NOTE</button>
+            <button class="btn" id="editNoteBtn" onclick="editSelectedNote()" disabled>EDIT</button>
+        </div>
+    </div>
+
+    <div class="notes-layout">
+
+        <div class="panel">
+            <div class="panel-header">
+                <span>NOTE LOG</span>
+                <span id="noteCounter">0</span>
+            </div>
+
+            <div class="notes-list" id="notesList"></div>
+        </div>
+
+        <div class="panel note-reader">
+            <div class="panel-header">
+                <span>READ</span>
+                <span id="noteStatus">NONE</span>
+            </div>
+
+            <div class="panel-body" id="noteReader">
+                <div class="empty">SELECT A NOTE</div>
+            </div>
+        </div>
+
+    </div>
+</section>
+
+</main>
+
+<!-- QUEST MODAL -->
+<div class="modal-backdrop" id="questModal">
+
+    <div class="modal">
+
+        <div class="modal-header">
+            <div class="modal-title" id="questModalTitle">CREATE QUEST</div>
+            <button class="modal-close" onclick="closeModal('questModal')">×</button>
+        </div>
+
+        <form id="questForm">
+
+            <div class="modal-body">
+
+                <div class="form-grid">
+
+                    <div class="form-group full">
+                        <label>QUEST NAME</label>
+                        <input id="questName" required>
+                    </div>
+
+                    <div class="form-group full">
+                        <label>SHORT DESCRIPTION</label>
+                        <textarea
+                            id="questDescription"
+                            placeholder="One or two sentences describing the objective..."
+                        ></textarea>
+                    </div>
+
+                    <div class="form-group">
+                        <label>STATUS</label>
+                        <select id="questStatus">
+                            <option value="active">ACTIVE</option>
+                            <option value="inactive">INACTIVE</option>
+                            <option value="completed">COMPLETED</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label>IMAGE</label>
+
+                        <div class="image-upload">
+
+                            <button
+                                type="button"
+                                class="btn"
+                                onclick="document.getElementById('questImageInput').click()"
+                            >
+                                CHOOSE IMAGE
+                            </button>
+
+                            <input
+                                type="file"
+                                id="questImageInput"
+                                accept="image/*"
+                                style="display:none"
+                            >
+
+                            <img
+                                id="questImagePreview"
+                                class="image-upload-preview"
+                                style="display:none"
+                            >
+
+                        </div>
+                    </div>
+
+                </div>
+
+            </div>
+
+            <div class="modal-footer">
+
+                <button
+                    type="button"
+                    class="btn danger"
+                    id="deleteQuestBtn"
+                    style="display:none"
+                    onclick="deleteEditingQuest()"
+                >
+                    DELETE QUEST
+                </button>
+
+                <div class="modal-footer-right">
+
+                    <button
+                        type="button"
+                        class="btn"
+                        onclick="closeModal('questModal')"
+                    >
+                        CANCEL
+                    </button>
+
+                    <button class="btn primary">
+                        SAVE QUEST
+                    </button>
+
+                </div>
+
+            </div>
+
+        </form>
+    </div>
+</div>
+
+<!-- HEALTH MODAL -->
+<div class="modal-backdrop" id="healthModal">
+
+    <div class="modal">
+
+        <div class="modal-header">
+            <div class="modal-title" id="healthModalTitle">HEALTH ZONE</div>
+            <button class="modal-close" onclick="closeModal('healthModal')">×</button>
+        </div>
+
+        <div class="modal-body">
+
+            <div id="healthEntries"></div>
+
+            <div style="margin-top:15px;padding-top:15px;border-top:1px solid var(--line)">
+
+                <div class="form-group">
+                    <label>NEW HEALTH RECORD</label>
+                    <textarea
+                        id="healthNewText"
+                        placeholder="e.g. headache, bruise, pain, fatigue..."
+                    ></textarea>
+                </div>
+
+                <button class="btn primary" onclick="addHealthEntry()">
+                    + ADD RECORD
+                </button>
+
+            </div>
+
+        </div>
+
+    </div>
+</div>
+
+<!-- NOTE MODAL -->
+<div class="modal-backdrop" id="noteModal">
+
+    <div class="modal">
+
+        <div class="modal-header">
+            <div class="modal-title" id="noteModalTitle">CREATE NOTE</div>
+            <button class="modal-close" onclick="closeModal('noteModal')">×</button>
+        </div>
+
+        <form id="noteForm">
+
+            <div class="modal-body">
+
+                <div class="form-group">
+                    <label>TITLE</label>
+                    <input id="noteTitle" required>
+                </div>
+
+                <div class="form-group">
+                    <label>NOTE</label>
+                    <textarea
+                        id="noteBody"
+                        style="min-height:280px"
+                        required
+                    ></textarea>
+                </div>
+
+            </div>
+
+            <div class="modal-footer">
+
+                <button
+                    type="button"
+                    class="btn danger"
+                    id="deleteNoteModalBtn"
+                    style="display:none"
+                    onclick="deleteSelectedNote()"
+                >
+                    DELETE
+                </button>
+
+                <div class="modal-footer-right">
+
+                    <button
+                        type="button"
+                        class="btn"
+                        onclick="closeModal('noteModal')"
+                    >
+                        CANCEL
+                    </button>
+
+                    <button class="btn primary">
+                        SAVE NOTE
+                    </button>
+
+                </div>
+
+            </div>
+
+        </form>
+    </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+/* =========================================================
+   PIP BOY 1998
+   IndexedDB + PWA + offline-first
+   ========================================================= */
+
+const DB_NAME = "pipboy_1998_db";
+const DB_VERSION = 1;
+const STORE_NAME = "state";
+
+let db = null;
+
+let state = {
+    quests: [
+        {
+            id: uid(),
+            name: "PhD applications",
+            description: "Find funded cognitive neuroscience and behavioral science PhD positions.",
+            image: "",
+            status: "active",
+            what: "",
+            deadline: "",
+            location: "",
+            comments: ""
+        },
+        {
+            id: uid(),
+            name: "Western career transition",
+            description: "Explore applied behavioral science, UX, human factors and creative research roles.",
+            image: "",
+            status: "active",
+            what: "",
+            deadline: "",
+            location: "",
+            comments: ""
+        }
+    ],
+
+    selectedQuest: null,
+
+    inventory: {
+        items: [],
+        money: [],
+        doc: [],
+        medicine: []
+    },
+
+    inventoryCategory: "items",
+
+    bigFive: [70,70,50,60,40],
+
+    metaPrograms: [
+        {left:"Движение ОТ",right:"Движение К",value:50},
+        {left:"Внешняя референция",right:"Внутренняя референция",value:50},
+        {left:"Рефлексивный",right:"Активный",value:50},
+        {left:"Процедурность",right:"Возможности",value:50},
+        {left:"Общее",right:"Детали",value:50},
+        {left:"Сам",right:"Другой / Система",value:50},
+        {left:"Диссоциация",right:"Ассоциация",value:50},
+        {left:"Сходство",right:"Различия",value:50}
+    ],
+
+    sacredWound:"",
+    contradictionA:"",
+    contradictionB:"",
+
+    health:{
+        head:[],
+        eyes:[],
+        chest:[],
+        abdomen:[],
+        leftArm:[],
+        rightArm:[],
+        leftLeg:[],
+        rightLeg:[]
+    },
+
+    notes:[],
+    selectedNote:null
+};
+
+let editingQuestId = null;
+let editingNoteId = null;
+let activeHealthZone = null;
+
+const zoneNames = {
+    head:"HEAD",
+    eyes:"EYES",
+    chest:"CHEST",
+    abdomen:"ABDOMEN",
+    leftArm:"LEFT ARM",
+    rightArm:"RIGHT ARM",
+    leftLeg:"LEFT LEG",
+    rightLeg:"RIGHT LEG"
+};
+
+const meta = state.metaPrograms.map(x => ({...x}));
+
+function uid(){
+    if(window.crypto && crypto.randomUUID){
+        return crypto.randomUUID();
+    }
+
+    return Date.now().toString(36) +
+        Math.random().toString(36).slice(2);
+}
+
+function clone(o){
+    return JSON.parse(JSON.stringify(o));
+}
+
+function esc(v){
+    return String(v ?? "")
+        .replace(/&/g,"&amp;")
+        .replace(/</g,"&lt;")
+        .replace(/>/g,"&gt;")
+        .replace(/"/g,"&quot;");
+}
+
+/* =========================================================
+   INDEXED DB
+   ========================================================= */
+
+function openDB(){
+    return new Promise((resolve,reject)=>{
+
+        const request = indexedDB.open(DB_NAME,DB_VERSION);
+
+        request.onupgradeneeded = e => {
+            const database = e.target.result;
+
+            if(!database.objectStoreNames.contains(STORE_NAME)){
+                database.createObjectStore(STORE_NAME);
+            }
+        };
+
+        request.onsuccess = e => {
+            db = e.target.result;
+            resolve(db);
+        };
+
+        request.onerror = () => reject(request.error);
+    });
+}
+
+function dbGet(key){
+    return new Promise((resolve,reject)=>{
+
+        const tx = db.transaction(STORE_NAME,"readonly");
+        const store = tx.objectStore(STORE_NAME);
+        const request = store.get(key);
+
+        request.onsuccess = () => resolve(request.result);
+        request.onerror = () => reject(request.error);
+    });
+}
+
+function dbPut(key,value){
+    return new Promise((resolve,reject)=>{
+
+        const tx = db.transaction(STORE_NAME,"readwrite");
+        const store = tx.objectStore(STORE_NAME);
+
+        const request = store.put(value,key);
+
+        request.onsuccess = () => resolve();
+        request.onerror = () => reject(request.error);
+    });
+}
+
+async function saveState(){
+    try{
+        await dbPut("state",state);
+    }catch(e){
+        console.error("IndexedDB save error",e);
+        toast("SAVE ERROR");
+    }
+}
+
+async function loadState(){
+
+    const saved = await dbGet("state");
+
+    if(!saved){
+        return;
+    }
+
+    state = mergeState(saved);
+
+    if(!state.selectedQuest && state.quests.length){
+        state.selectedQuest = state.quests[0].id;
+    }
+}
+
+function mergeState(saved){
+
+    const base = clone({
+        quests:[],
+        selectedQuest:null,
+        inventory:{
+            items:[],
+            money:[],
+            doc:[],
+            medicine:[]
+        },
+        inventoryCategory:"items",
+        bigFive:[70,70,50,60,40],
+        metaPrograms:clone(meta),
+        sacredWound:"",
+        contradictionA:"",
+        contradictionB:"",
+        health:{
+            head:[],
+            eyes:[],
+            chest:[],
+            abdomen:[],
+            leftArm:[],
+            rightArm:[],
+            leftLeg:[],
+            rightLeg:[]
+        },
+        notes:[],
+        selectedNote:null
+    });
+
+    const merged = Object.assign(base,saved);
+
+    merged.inventory = Object.assign(
+        base.inventory,
+        saved.inventory || {}
+    );
+
+    merged.health = Object.assign(
+        base.health,
+        saved.health || {}
+    );
+
+    if(!Array.isArray(merged.notes)){
+        merged.notes=[];
+    }
+
+    if(!Array.isArray(merged.quests)){
+        merged.quests=[];
+    }
+
+    return merged;
+}
+
+/* =========================================================
+   CLOCK
+   ========================================================= */
+
+function updateClock(){
+
+    const d = new Date();
+
+    document.getElementById("clock").textContent =
+        d.toLocaleTimeString();
+
+    document.getElementById("date").textContent =
+        d.toLocaleDateString(
+            undefined,
+            {
+                year:"numeric",
+                month:"short",
+                day:"2-digit"
+            }
+        ).toUpperCase();
+}
+
+setInterval(updateClock,1000);
+updateClock();
+
+/* =========================================================
+   NAVIGATION
+   ========================================================= */
+
+document.querySelectorAll(".nav-btn").forEach(button=>{
+
+    button.addEventListener("click",()=>{
+
+        document.querySelectorAll(".nav-btn")
+            .forEach(x=>x.classList.remove("active"));
+
+        button.classList.add("active");
+
+        document.querySelectorAll(".screen")
+            .forEach(x=>x.classList.remove("active"));
+
+        const target =
+            document.getElementById(
+                "screen-"+button.dataset.screen
+            );
+
+        if(target){
+            target.classList.add("active");
+        }
+
+        renderAll();
+    });
+});
+
+/* =========================================================
+   TOAST
+   ========================================================= */
+
+function toast(message){
+
+    const element =
+        document.getElementById("toast");
+
+    element.textContent = message;
+
+    element.classList.add("show");
+
+    clearTimeout(window.__toastTimer);
+
+    window.__toastTimer =
+        setTimeout(()=>{
+            element.classList.remove("show");
+        },1700);
+}
+
+/* =========================================================
+   MODALS
+   ========================================================= */
+
+function closeModal(id){
+
+    const element =
+        document.getElementById(id);
+
+    if(element){
+        element.classList.remove("open");
+    }
+
+    if(id === "questModal"){
+        editingQuestId=null;
+    }
+
+    if(id === "noteModal"){
+        editingNoteId=null;
+    }
+
+    if(id === "healthModal"){
+        activeHealthZone=null;
+    }
+}
+
+document.querySelectorAll(".modal-backdrop")
+.forEach(backdrop=>{
+
+    backdrop.addEventListener("click",e=>{
+        if(e.target === backdrop){
+            closeModal(backdrop.id);
+        }
+    });
+});
+
+document.addEventListener("keydown",e=>{
+
+    if(e.key === "Escape"){
+
+        document.querySelectorAll(".modal-backdrop.open")
+        .forEach(x=>closeModal(x.id));
+    }
+});
+
+/* =========================================================
+   QUESTS
+   ========================================================= */
+
+function renderQuests(){
+
+    const list =
+        document.getElementById("questList");
+
+    const counter =
+        document.getElementById("questCounter");
+
+    counter.textContent =
+        state.quests.length;
+
+    if(!state.quests.length){
+
+        list.innerHTML =
+            `<div class="empty">NO QUESTS</div>`;
+
+        renderQuestPreview();
+
+        return;
+    }
+
+    list.innerHTML =
+        state.quests.map(q=>{
+
+            const selected =
+                q.id === state.selectedQuest;
+
+            return `
+                <div
+                    class="quest-row
+                        ${q.status}
+                        ${selected ? "selected":""}"
+                    onclick="selectQuest('${q.id}')"
+                >
+
+                    <div class="quest-status"></div>
+
+                    <div class="quest-name">
+                        ${esc(q.name)}
+                    </div>
+
+                </div>
+            `;
+
+        }).join("");
+
+    renderQuestPreview();
+}
+
+function selectQuest(id){
+
+    state.selectedQuest=id;
+
+    saveState();
+
+    renderQuests();
+    renderQuestData();
+
+    document.getElementById("editQuestTopBtn").disabled=false;
+}
+
+function selectedQuest(){
+
+    return state.quests.find(
+        q=>q.id===state.selectedQuest
+    );
+}
+
+function renderQuestPreview(){
+
+    const target =
+        document.getElementById("questPreview");
+
+    const status =
+        document.getElementById("questPreviewStatus");
+
+    const editButton =
+        document.getElementById("editQuestTopBtn");
+
+    const quest = selectedQuest();
+
+    if(!quest){
+
+        status.textContent="NONE";
+
+        editButton.disabled=true;
+
+        target.innerHTML =
+            `<div class="empty">SELECT A QUEST</div>`;
+
+        return;
+    }
+
+    editButton.disabled=false;
+
+    status.textContent =
+        quest.status.toUpperCase();
+
+    const image = quest.image
+        ? `
+            <img
+                src="${quest.image}"
+                alt=""
+            >
+          `
+        : `
+            <div class="quest-placeholder">
+                <div class="vault-symbol">☢</div>
+                <div>NO VISUAL DATA</div>
+            </div>
+          `;
+
+    target.innerHTML = `
+
+        <div class="quest-preview-content">
+
+            <div class="quest-image">
+                ${image}
+            </div>
+
+            <div class="quest-description">
+
+                <div class="quest-title">
+                    ${esc(quest.name)}
+                </div>
+
+                <div class="quest-status-line">
+                    STATUS // ${quest.status.toUpperCase()}
+                </div>
+
+                <div class="quest-short-description">
+                    ${esc(
+                        quest.description ||
+                        "NO DESCRIPTION AVAILABLE."
+                    )}
+                </div>
+
+                <div class="quest-preview-actions">
+
+                    <button
+                        class="btn primary"
+                        onclick="editSelectedQuest()"
+                    >
+                        EDIT QUEST
+                    </button>
+
+                    <button
+                        class="btn"
+                        onclick="openQuestData()"
+                    >
+                        QUEST DATA
+                    </button>
+
+                </div>
+
+            </div>
+
+        </div>
+
+        <div class="quest-preview-footer">
+            <span>OBJECTIVE SELECTED</span>
+            <span>PIP BOY 1998</span>
+        </div>
+    `;
+}
+
+function openQuestData(){
+
+    document.querySelector(
+        '[data-screen="questdata"]'
+    ).click();
+}
+
+function openQuestModal(id=null){
+
+    editingQuestId=id;
+
+    document.getElementById("questForm").reset();
+
+    document.getElementById(
+        "questModalTitle"
+    ).textContent =
+        id ? "EDIT QUEST" : "CREATE QUEST";
+
+    document.getElementById(
+        "deleteQuestBtn"
+    ).style.display =
+        id ? "block" : "none";
+
+    document.getElementById(
+        "questImagePreview"
+    ).style.display="none";
+
+    document.getElementById(
+        "questImagePreview"
+    ).src="";
+
+    if(id){
+
+        const q =
+            state.quests.find(x=>x.id===id);
+
+        if(q){
+
+            document.getElementById(
+                "questName"
+            ).value=q.name || "";
+
+            document.getElementById(
+                "questDescription"
+            ).value=q.description || "";
+
+            document.getElementById(
+                "questStatus"
+            ).value=q.status || "active";
+
+            if(q.image){
+
+                const preview =
+                    document.getElementById(
+                        "questImagePreview"
+                    );
+
+                preview.src=q.image;
+                preview.style.display="block";
+            }
+        }
+    }
+
+    document
+        .getElementById("questModal")
+        .classList.add("open");
+}
+
+function editSelectedQuest(){
+
+    const q=selectedQuest();
+
+    if(q){
+        openQuestModal(q.id);
+    }
+}
+
+document.getElementById("questForm")
+.addEventListener("submit",async e=>{
+
+    e.preventDefault();
+
+    const name =
+        document.getElementById(
+            "questName"
+        ).value.trim();
+
+    if(!name)return;
+
+    const description =
+        document.getElementById(
+            "questDescription"
+        ).value.trim();
+
+    const status =
+        document.getElementById(
+            "questStatus"
+        ).value;
+
+    if(editingQuestId){
+
+        const q =
+            state.quests.find(
+                x=>x.id===editingQuestId
+            );
+
+        if(q){
+
+            q.name=name;
+            q.description=description;
+            q.status=status;
+        }
+
+        state.selectedQuest=editingQuestId;
+
+        await saveState();
+
+        closeModal("questModal");
+
+        renderAll();
+
+        toast("QUEST UPDATED");
+
+    }else{
+
+        const q={
+            id:uid(),
+            name,
+            description,
+            image:"",
+            status,
+            what:"",
+            deadline:"",
+            location:"",
+            comments:""
+        };
+
+        state.quests.push(q);
+        state.selectedQuest=q.id;
+
+        await saveState();
+
+        closeModal("questModal");
+
+        renderAll();
+
+        toast("QUEST CREATED");
+    }
+});
+
+document.getElementById("questImageInput")
+.addEventListener("change",e=>{
+
+    const file=e.target.files[0];
+
+    if(!file)return;
+
+    const reader=new FileReader();
+
+    reader.onload=event=>{
+
+        const preview =
+            document.getElementById(
+                "questImagePreview"
+            );
+
+        preview.src=event.target.result;
+        preview.style.display="block";
+
+        if(editingQuestId){
+
+            const q =
+                state.quests.find(
+                    x=>x.id===editingQuestId
+                );
+
+            if(q){
+                q.image=event.target.result;
+                saveState();
+            }
+
+        }else{
+
+            window.__newQuestImage =
+                event.target.result;
+        }
+    };
+
+    reader.readAsDataURL(file);
+});
+
+function deleteEditingQuest(){
+
+    if(!editingQuestId)return;
+
+    if(!confirm("DELETE THIS QUEST?"))return;
+
+    state.quests =
+        state.quests.filter(
+            q=>q.id!==editingQuestId
+        );
+
+    state.selectedQuest =
+        state.quests[0]?.id || null;
+
+    saveState();
+
+    closeModal("questModal");
+
+    renderAll();
+
+    toast("QUEST DELETED");
+}
+
+/* =========================================================
+   QUEST DATA
+   ========================================================= */
+
+function renderQuestData(){
+
+    const target =
+        document.getElementById(
+            "questDataContent"
+        );
+
+    const q=selectedQuest();
+
+    if(!q){
+
+        target.innerHTML =
+            `<div class="panel">
+                <div class="empty">
+                    SELECT A QUEST FIRST
+                </div>
+             </div>`;
+
+        return;
+    }
+
+    target.innerHTML=`
+
+        <div class="panel">
+
+            <div class="panel-header">
+                <span>${esc(q.name)}</span>
+                <span>EDITABLE</span>
+            </div>
+
+            <div class="panel-body">
+
+                <div class="quest-data-grid">
+
+                    <div class="form-group wide">
+                        <label>WHAT NEEDS TO BE DONE</label>
+
+                        <textarea
+                            id="questWhat"
+                        >${esc(q.what || "")}</textarea>
+                    </div>
+
+                    <div class="form-group">
+                        <label>DEADLINE / TIMEFRAME</label>
+
+                        <input
+                            id="questDeadline"
+                            value="${esc(q.deadline || "")}"
+                        >
+                    </div>
+
+                    <div class="form-group">
+                        <label>LOCATION</label>
+
+                        <input
+                            id="questLocation"
+                            value="${esc(q.location || "")}"
+                        >
+                    </div>
+
+                    <div class="form-group wide">
+                        <label>COMMENTS</label>
+
+                        <textarea
+                            id="questComments"
+                        >${esc(q.comments || "")}</textarea>
+                    </div>
+
+                </div>
+
+                <div style="margin-top:8px">
+                    <button
+                        class="btn primary"
+                        onclick="saveQuestData()"
+                    >
+                        SAVE QUEST DATA
+                    </button>
+                </div>
+
+            </div>
+
+        </div>
+    `;
+}
+
+async function saveQuestData(){
+
+    const q=selectedQuest();
+
+    if(!q)return;
+
+    q.what =
+        document.getElementById(
+            "questWhat"
+        ).value;
+
+    q.deadline =
+        document.getElementById(
+            "questDeadline"
+        ).value;
+
+    q.location =
+        document.getElementById(
+            "questLocation"
+        ).value;
+
+    q.comments =
+        document.getElementById(
+            "questComments"
+        ).value;
+
+    await saveState();
+
+    toast("QUEST DATA SAVED");
+}
+
+/* =========================================================
+   INVENTORY
+   ========================================================= */
+
+const inventoryNames={
+    items:"ITEMS",
+    money:"MONEY",
+    doc:"DOC",
+    medicine:"MEDICINE"
+};
+
+document.querySelectorAll(".inventory-tab")
+.forEach(button=>{
+
+    button.addEventListener("click",()=>{
+
+        document.querySelectorAll(".inventory-tab")
+            .forEach(x=>x.classList.remove("active"));
+
+        button.classList.add("active");
+
+        state.inventoryCategory =
+            button.dataset.category;
+
+        saveState();
+
+        renderInventory();
+    });
+});
+
+function renderInventory(){
+
+    document.querySelectorAll(".inventory-tab")
+    .forEach(button=>{
+
+        button.classList.toggle(
+            "active",
+            button.dataset.category ===
+            state.inventoryCategory
+        );
+    });
+
+    const category =
+        state.inventoryCategory;
+
+    const items =
+        state.inventory[category] || [];
+
+    document.getElementById(
+        "inventoryContent"
+    ).innerHTML=`
+
+        <div class="panel">
+
+            <div class="panel-header">
+                <span>${inventoryNames[category]}</span>
+                <span>${items.length} ENTRIES</span>
+            </div>
+
+            <div class="panel-body">
+
+                <div class="inventory-add">
+
+                    <input
+                        id="inventoryNew"
+                        placeholder="Add entry..."
+                    >
+
+                    <button
+                        class="btn primary"
+                        onclick="addInventory()"
+                    >
+                        ADD
+                    </button>
+
+                </div>
+
+                ${
+                    items.length
+                    ?
+                    items.map(item=>`
+
+                        <div class="inventory-item">
+
+                            <div>
+                                <div class="inventory-item-name">
+                                    ${esc(item.name)}
+                                </div>
+
+                                <div class="inventory-condition">
+                                    ${esc(item.condition || "NORMAL")}
+
+                                    <div class="condition-bar">
+                                        <div
+                                            class="condition-fill"
+                                            style="width:${Number(item.quality ?? 100)}%"
+                                        ></div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <input
+                                value="${esc(item.condition || "NORMAL")}"
+                                onchange="updateInventoryCondition('${item.id}',this.value)"
+                                placeholder="STATE"
+                            >
+
+                            <input
+                                type="number"
+                                min="0"
+                                max="100"
+                                value="${Number(item.quality ?? 100)}"
+                                onchange="updateInventoryQuality('${item.id}',this.value)"
+                            >
+
+                            <button
+                                class="item-delete"
+                                onclick="deleteInventory('${item.id}')"
+                            >
+                                ×
+                            </button>
+
+                        </div>
+
+                    `).join("")
+                    :
+                    `<div class="empty">EMPTY</div>`
+                }
+
+            </div>
+
+        </div>
+    `;
+}
+
+async function addInventory(){
+
+    const input =
+        document.getElementById(
+            "inventoryNew"
+        );
+
+    const value=input.value.trim();
+
+    if(!value)return;
+
+    state.inventory[
+        state.inventoryCategory
+    ].push({
+        id:uid(),
+        name:value,
+        condition:"NORMAL",
+        quality:100
+    });
+
+    input.value="";
+
+    await saveState();
+
+    renderInventory();
+
+    toast("ITEM ADDED");
+}
+
+async function updateInventoryCondition(id,value){
+
+    const item =
+        state.inventory[
+            state.inventoryCategory
+        ].find(x=>x.id===id);
+
+    if(item){
+
+        item.condition=value;
+
+        await saveState();
+    }
+}
+
+async function updateInventoryQuality(id,value){
+
+    const item =
+        state.inventory[
+            state.inventoryCategory
+        ].find(x=>x.id===id);
+
+    if(item){
+
+        item.quality=Math.max(
+            0,
+            Math.min(100,Number(value)||0)
+        );
+
+        await saveState();
+
+        renderInventory();
+    }
+}
+
+async function deleteInventory(id){
+
+    state.inventory[
+        state.inventoryCategory
+    ] =
+        state.inventory[
+            state.inventoryCategory
+        ].filter(x=>x.id!==id);
+
+    await saveState();
+
+    renderInventory();
+
+    toast("ITEM REMOVED");
+}
+
+/* =========================================================
+   BIG FIVE
+   ========================================================= */
+
+const bigFiveNames=[
+    "OPENNESS",
+    "CONSCIENTIOUSNESS",
+    "EXTRAVERSION",
+    "AGREEABLENESS",
+    "NEUROTICISM"
+];
+
+function renderBigFive(){
+
+    const target =
+        document.getElementById(
+            "bigFiveControls"
+        );
+
+    target.innerHTML =
+        state.bigFive.map((value,i)=>`
+
+            <div class="trait-row">
+
+                <div class="trait-head">
+                    <span>${bigFiveNames[i]}</span>
+                    <span id="bfv-${i}">${value}</span>
+                </div>
+
+                <input
+                    class="trait-slider"
+                    type="range"
+                    min="0"
+                    max="100"
+                    value="${value}"
+                    oninput="changeBigFive(${i},this.value)"
+                >
+
+            </div>
+        `).join("");
+
+    drawRadar();
+}
+
+async function changeBigFive(index,value){
+
+    state.bigFive[index]=Number(value);
+
+    const output =
+        document.getElementById(
+            "bfv-"+index
+        );
+
+    if(output){
+        output.textContent=value;
+    }
+
+    drawRadar();
+
+    await saveState();
+}
+
+function drawRadar(){
+
+    const svg =
+        document.getElementById("radar");
+
+    const cx=150;
+    const cy=140;
+    const radius=95;
+
+    let html="";
+
+    for(let ring=1;ring<=4;ring++){
+
+        const r=radius*ring/4;
+
+        let points=[];
+
+        for(let i=0;i<5;i++){
+
+            const angle =
+                -Math.PI/2 +
+                i*(Math.PI*2/5);
+
+            points.push(
+                `${cx+Math.cos(angle)*r},${cy+Math.sin(angle)*r}`
+            );
+        }
+
+        html+=`
+            <polygon
+                points="${points.join(" ")}"
+                fill="none"
+                stroke="#21472c"
+                stroke-width="1"
+            />
+        `;
+    }
+
+    for(let i=0;i<5;i++){
+
+        const angle =
+            -Math.PI/2 +
+            i*(Math.PI*2/5);
+
+        const x =
+            cx+Math.cos(angle)*radius;
+
+        const y =
+            cy+Math.sin(angle)*radius;
+
+        html+=`
+            <line
+                x1="${cx}"
+                y1="${cy}"
+                x2="${x}"
+                y2="${y}"
+                stroke="#21472c"
+            />
+
+            <text
+                x="${cx+Math.cos(angle)*(radius+18)}"
+                y="${cy+Math.sin(angle)*(radius+18)}"
+                fill="#6fa17a"
+                font-size="8"
+                font-family="monospace"
+                text-anchor="middle"
+            >
+                ${bigFiveNames[i].slice(0,4)}
+            </text>
+        `;
+    }
+
+    const points =
+        state.bigFive.map((value,i)=>{
+
+            const angle =
+                -Math.PI/2 +
+                i*(Math.PI*2/5);
+
+            const r =
+                radius*value/100;
+
+            return `
+                ${cx+Math.cos(angle)*r},
+                ${cy+Math.sin(angle)*r}
+            `;
+        }).join(" ");
+
+    html+=`
+        <polygon
+            points="${points}"
+            fill="rgba(99,255,130,.12)"
+            stroke="#63ff82"
+            stroke-width="2"
+        />
+    `;
+
+    state.bigFive.forEach((value,i)=>{
+
+        const angle =
+            -Math.PI/2 +
+            i*(Math.PI*2/5);
+
+        const r=radius*value/100;
+
+        html+=`
+            <circle
+                cx="${cx+Math.cos(angle)*r}"
+                cy="${cy+Math.sin(angle)*r}"
+                r="4"
+                fill="#63ff82"
+            />
+        `;
+    });
+
+    svg.innerHTML=html;
+}
+
+/* =========================================================
+   METAPROGRAMS
+   ========================================================= */
+
+function renderMetaPrograms(){
+
+    document.getElementById(
+        "metaPrograms"
+    ).innerHTML =
+        state.metaPrograms.map((m,i)=>`
+
+            <div class="meta-row">
+
+                <div class="meta-labels">
+                    <span>${esc(m.left)}</span>
+                    <span>${esc(m.right)}</span>
+                </div>
+
+                <input
+                    class="meta-slider"
+                    type="range"
+                    min="0"
+                    max="100"
+                    value="${m.value}"
+                    oninput="changeMeta(${i},this.value)"
+                >
+
+            </div>
+        `).join("");
+}
+
+async function changeMeta(index,value){
+
+    state.metaPrograms[index].value=
+        Number(value);
+
+    await saveState();
+}
+
+/* =========================================================
+   STATS TEXT
+   ========================================================= */
+
+function renderStatsText(){
+
+    const wound =
+        document.getElementById("sacredWound");
+
+    const a =
+        document.getElementById("contradictionA");
+
+    const b =
+        document.getElementById("contradictionB");
+
+    if(wound){
+        wound.value=state.sacredWound || "";
+    }
+
+    if(a){
+        a.value=state.contradictionA || "";
+    }
+
+    if(b){
+        b.value=state.contradictionB || "";
+    }
+}
+
+["sacredWound","contradictionA","contradictionB"]
+.forEach(id=>{
+
+    document.getElementById(id)
+    .addEventListener("input",async e=>{
+
+        if(id==="sacredWound"){
+            state.sacredWound=e.target.value;
+        }
+
+        if(id==="contradictionA"){
+            state.contradictionA=e.target.value;
+        }
+
+        if(id==="contradictionB"){
+            state.contradictionB=e.target.value;
+        }
+
+        await saveState();
+    });
+});
+
+/* =========================================================
+   HEALTH
+   ========================================================= */
+
+function healthClass(count){
+
+    if(count>=3)return "danger";
+    if(count>=1)return "warn";
+    return "good";
+}
+
+function renderHealth(){
+
+    const zones =
+        document.getElementById(
+            "healthZoneList"
+        );
+
+    let total=0;
+
+    Object.keys(zoneNames).forEach(zone=>{
+
+        total +=
+            state.health[zone].length;
+    });
+
+    document.getElementById(
+        "healthCount"
+    ).textContent =
+        total + " MARKS";
+
+    document.getElementById(
+        "healthOverallStatus"
+    ).textContent =
+        total===0
+        ? "NOMINAL"
+        : "ATTENTION";
+
+    zones.innerHTML =
+        Object.keys(zoneNames).map(zone=>{
+
+            const count =
+                state.health[zone].length;
+
+            const cls=healthClass(count);
+
+            return `
+                <div
+                    class="health-zone-card ${cls}"
+                    onclick="openHealthZone('${zone}')"
+                >
+
+                    <div class="health-zone-top">
+
+                        <span class="health-zone-name">
+                            ${zoneNames[zone]}
+                        </span>
+
+                        <span class="health-zone-count">
+                            ${count}
+                        </span>
+
+                    </div>
+
+                </div>
+            `;
+
+        }).join("");
+
+    document.querySelectorAll(
+        ".body-zone"
+    ).forEach(element=>{
+
+        const zone=element.dataset.zone;
+
+        element.classList.remove(
+            "warn",
+            "danger"
+        );
+
+        const count =
+            state.health[zone]?.length || 0;
+
+        if(count>=3){
+            element.classList.add("danger");
+        }else if(count>=1){
+            element.classList.add("warn");
+        }
+    });
+}
+
+function openHealthZone(zone){
+
+    activeHealthZone=zone;
+
+    document.getElementById(
+        "healthModalTitle"
+    ).textContent =
+        zoneNames[zone] || zone;
+
+    document.getElementById(
+        "healthNewText"
+    ).value="";
+
+    renderHealthEntries();
+
+    document
+        .getElementById("healthModal")
+        .classList.add("open");
+}
+
+function renderHealthEntries(){
+
+    const target =
+        document.getElementById(
+            "healthEntries"
+        );
+
+    if(!activeHealthZone)return;
+
+    const entries =
+        state.health[activeHealthZone] || [];
+
+    if(!entries.length){
+
+        target.innerHTML=
+            `<div class="empty">
+                NO RECORDS FOR THIS ZONE
+             </div>`;
+
+        return;
+    }
+
+    target.innerHTML =
+        entries.map(entry=>`
+
+            <div class="health-entry">
+
+                <div class="health-entry-text">
+                    ${esc(entry.text)}
+                </div>
+
+                <div class="health-entry-actions">
+
+                    <button
+                        class="btn danger"
+                        onclick="deleteHealthEntry('${entry.id}')"
+                    >
+                        ×
+                    </button>
+
+                </div>
+
+            </div>
+        `).join("");
+}
+
+async function addHealthEntry(){
+
+    if(!activeHealthZone)return;
+
+    const input =
+        document.getElementById(
+            "healthNewText"
+        );
+
+    const text=input.value.trim();
+
+    if(!text)return;
+
+    state.health[
+        activeHealthZone
+    ].push({
+        id:uid(),
+        text
+    });
+
+    input.value="";
+
+    await saveState();
+
+    renderHealth();
+    renderHealthEntries();
+
+    toast("HEALTH RECORD ADDED");
+}
+
+async function deleteHealthEntry(id){
+
+    if(!activeHealthZone)return;
+
+    state.health[
+        activeHealthZone
+    ] =
+        state.health[
+            activeHealthZone
+        ].filter(x=>x.id!==id);
+
+    await saveState();
+
+    renderHealth();
+    renderHealthEntries();
+
+    toast("HEALTH RECORD REMOVED");
+}
+
+/* =========================================================
+   NOTES
+   ========================================================= */
+
+function renderNotes(){
+
+    const list =
+        document.getElementById(
+            "notesList"
+        );
+
+    const counter =
+        document.getElementById(
+            "noteCounter"
+        );
+
+    counter.textContent=
+        state.notes.length;
+
+    document.getElementById(
+        "editNoteBtn"
+    ).disabled =
+        !state.selectedNote;
+
+    if(!state.notes.length){
+
+        list.innerHTML=
+            `<div class="empty">NO NOTES</div>`;
+
+        document.getElementById(
+            "noteReader"
+        ).innerHTML=
+            `<div class="empty">CREATE A NOTE</div>`;
+
+        document.getElementById(
+            "noteStatus"
+        ).textContent="NONE";
+
+        return;
+    }
+
+    list.innerHTML =
+        state.notes.map(note=>{
+
+            const selected =
+                note.id===state.selectedNote;
+
+            const preview =
+                (note.body || "")
+                    .replace(/\s+/g," ")
+                    .slice(0,90);
+
+            return `
+                <div
+                    class="note-row ${selected ? "selected":""}"
+                    onclick="selectNote('${note.id}')"
+                >
+
+                    <div class="note-row-title">
+                        ${esc(note.title)}
+                    </div>
+
+                    <div class="note-row-preview">
+                        ${esc(preview)}
+                    </div>
+
+                </div>
+            `;
+
+        }).join("");
+
+    renderNoteReader();
+}
+
+function selectNote(id){
+
+    state.selectedNote=id;
+
+    saveState();
+
+    renderNotes();
+}
+
+function selectedNote(){
+
+    return state.notes.find(
+        x=>x.id===state.selectedNote
+    );
+}
+
+function renderNoteReader(){
+
+    const target =
+        document.getElementById(
+            "noteReader"
+        );
+
+    const note=selectedNote();
+
+    if(!note){
+
+        target.innerHTML=
+            `<div class="empty">SELECT A NOTE</div>`;
+
+        document.getElementById(
+            "noteStatus"
+        ).textContent="NONE";
+
+        return;
+    }
+
+    document.getElementById(
+        "noteStatus"
+    ).textContent="SELECTED";
+
+    target.innerHTML=`
+
+        <div class="note-reader-title">
+            ${esc(note.title)}
+        </div>
+
+        <div class="note-reader-body">
+            ${esc(note.body)}
+        </div>
+
+        <div
+            style="
+                margin-top:25px;
+                padding-top:12px;
+                border-top:1px solid var(--line);
+                display:flex;
+                gap:7px;
+            "
+        >
+
+            <button
+                class="btn"
+                onclick="editSelectedNote()"
+            >
+                EDIT
+            </button>
+
+            <button
+                class="btn danger"
+                onclick="deleteSelectedNote()"
+            >
+                DELETE
+            </button>
+
+        </div>
+    `;
+}
+
+function openNoteModal(id=null){
+
+    editingNoteId=id;
+
+    document.getElementById(
+        "noteForm"
+    ).reset();
+
+    document.getElementById(
+        "noteModalTitle"
+    ).textContent =
+        id ? "EDIT NOTE" : "CREATE NOTE";
+
+    document.getElementById(
+        "deleteNoteModalBtn"
+    ).style.display =
+        id ? "block" : "none";
+
+    if(id){
+
+        const note =
+            state.notes.find(
+                x=>x.id===id
+            );
+
+        if(note){
+
+            document.getElementById(
+                "noteTitle"
+            ).value=note.title;
+
+            document.getElementById(
+                "noteBody"
+            ).value=note.body;
+        }
+    }
+
+    document
+        .getElementById("noteModal")
+        .classList.add("open");
+}
+
+function editSelectedNote(){
+
+    if(state.selectedNote){
+        openNoteModal(
+            state.selectedNote
+        );
+    }
+}
+
+document.getElementById("noteForm")
+.addEventListener("submit",async e=>{
+
+    e.preventDefault();
+
+    const title =
+        document.getElementById(
+            "noteTitle"
+        ).value.trim();
+
+    const body =
+        document.getElementById(
+            "noteBody"
+        ).value.trim();
+
+    if(!title)return;
+
+    if(editingNoteId){
+
+        const note =
+            state.notes.find(
+                x=>x.id===editingNoteId
+            );
+
+        if(note){
+
+            note.title=title;
+            note.body=body;
+        }
+
+        state.selectedNote=
+            editingNoteId;
+
+        await saveState();
+
+        closeModal("noteModal");
+
+        renderNotes();
+
+        toast("NOTE UPDATED");
+
+    }else{
+
+        const note={
+            id:uid(),
+            title,
+            body
+        };
+
+        state.notes.unshift(note);
+
+        state.selectedNote=
+            note.id;
+
+        await saveState();
+
+        closeModal("noteModal");
+
+        renderNotes();
+
+        toast("NOTE CREATED");
+    }
+});
+
+async function deleteSelectedNote(){
+
+    if(!state.selectedNote)return;
+
+    if(!confirm("DELETE THIS NOTE?"))return;
+
+    state.notes =
+        state.notes.filter(
+            x=>x.id!==state.selectedNote
+        );
+
+    state.selectedNote =
+        state.notes[0]?.id || null;
+
+    await saveState();
+
+    closeModal("noteModal");
+
+    renderNotes();
+
+    toast("NOTE DELETED");
+}
+
+/* =========================================================
+   EXPORT
+   ========================================================= */
+
+async function exportData(){
+
+    try{
+
+        const backup =
+            JSON.stringify(
+                {
+                    format:"PIP BOY 1998",
+                    version:1,
+                    exportedAt:new Date().toISOString(),
+                    data:state
+                },
+                null,
+                2
+            );
+
+        const blob =
+            new Blob(
+                [backup],
+                {
+                    type:"application/json"
+                }
+            );
+
+        const url =
+            URL.createObjectURL(blob);
+
+        const anchor =
+            document.createElement("a");
+
+        anchor.href=url;
+
+        anchor.download=
+            "pip-boy-1998-backup.json";
+
+        document.body.appendChild(anchor);
+
+        anchor.click();
+
+        anchor.remove();
+
+        setTimeout(()=>{
+            URL.revokeObjectURL(url);
+        },1000);
+
+        toast("DATA EXPORTED");
+
+    }catch(e){
+
+        console.error(e);
+
+        toast("EXPORT ERROR");
+    }
+}
+
+/* =========================================================
+   IMPORT
+   ========================================================= */
+
+document.getElementById(
+    "importFile"
+).addEventListener("change",e=>{
+
+    const file=e.target.files[0];
+
+    if(!file)return;
+
+    const reader=new FileReader();
+
+    reader.onload=async event=>{
+
+        try{
+
+            const parsed =
+                JSON.parse(
+                    event.target.result
+                );
+
+            const incoming =
+                parsed.data || parsed;
+
+            if(
+                !incoming ||
+                !Array.isArray(incoming.quests) ||
+                !incoming.inventory
+            ){
+                throw new Error(
+                    "Invalid backup"
+                );
+            }
+
+            if(
+                !confirm(
+                    "IMPORT THIS BACKUP? CURRENT DATA WILL BE REPLACED."
+                )
+            ){
+                e.target.value="";
+                return;
+            }
+
+            state=mergeState(incoming);
+
+            await saveState();
+
+            renderAll();
+
+            toast("DATA IMPORTED");
+
+        }catch(error){
+
+            console.error(error);
+
+            alert(
+                "Invalid PIP BOY 1998 backup."
+            );
+        }
+
+        e.target.value="";
+    };
+
+    reader.readAsText(file);
+});
+
+/* =========================================================
+   PWA
+   ========================================================= */
+
+if("serviceWorker" in navigator){
+
+    window.addEventListener(
+        "load",
+        ()=>{
+            navigator.serviceWorker
+                .register("./sw.js")
+                .catch(error=>{
+                    console.warn(
+                        "Service Worker registration failed",
+                        error
+                    );
+                });
+        }
+    );
+}
+
+/* =========================================================
+   TOUCH SUPPORT
+   ========================================================= */
+
+/*
+   The health SVG already uses click events, which work
+   naturally with iPhone touch.
+
+   This helper prevents accidental double activation on
+   some iOS WebViews.
+*/
+
+let lastTouch=0;
+
+document.addEventListener(
+    "touchend",
+    ()=>{
+        lastTouch=Date.now();
+    },
+    {passive:true}
+);
+
+/* =========================================================
+   RENDER ALL
+   ========================================================= */
+
+function renderAll(){
+
+    renderQuests();
+    renderQuestData();
+    renderInventory();
+
+    renderBigFive();
+    renderMetaPrograms();
+    renderStatsText();
+
+    renderHealth();
+    renderNotes();
+}
+
+/* =========================================================
+   INIT
+   ========================================================= */
+
+async function init(){
+
+    try{
+
+        await openDB();
+
+        await loadState();
+
+        if(
+            !state.selectedQuest &&
+            state.quests.length
+        ){
+            state.selectedQuest =
+                state.quests[0].id;
+
+            await saveState();
+        }
+
+        renderAll();
+
+        toast("SYSTEM ONLINE");
+
+    }catch(error){
+
+        console.error(
+            "PIP BOY initialization error",
+            error
+        );
+
+        alert(
+            "PIP BOY DATABASE INITIALIZATION FAILED."
+        );
+    }
+}
+
+init();
+
+</script>
+
+</body>
+</html>
