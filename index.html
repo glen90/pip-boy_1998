@@ -1,0 +1,4076 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport"
+      content="width=device-width, initial-scale=1, viewport-fit=cover,
+               maximum-scale=1, user-scalable=no">
+
+<meta name="theme-color" content="#071007">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="PIP BOY 1998">
+
+<link rel="manifest" href="manifest.webmanifest">
+
+<title>PIP BOY 1998</title>
+
+<style>
+:root{
+    --bg:#050805;
+    --panel:#081008;
+    --panel2:#0b140b;
+    --green:#8cff72;
+    --green2:#53d94a;
+    --green3:#244b23;
+    --dim:#4f8148;
+    --text:#b8ff9f;
+    --yellow:#ffe86b;
+    --red:#ff5f55;
+    --white:#d7ffd0;
+    --border:rgba(140,255,114,.42);
+    --border2:rgba(140,255,114,.18);
+    --shadow:0 0 12px rgba(100,255,80,.12);
+    --radius:5px;
+}
+
+*{
+    box-sizing:border-box;
+    -webkit-tap-highlight-color:transparent;
+}
+
+html,body{
+    margin:0;
+    padding:0;
+    width:100%;
+    height:100%;
+    overflow:hidden;
+    background:var(--bg);
+    color:var(--text);
+    font-family:
+        ui-monospace,
+        SFMono-Regular,
+        Menlo,
+        Monaco,
+        Consolas,
+        "Liberation Mono",
+        monospace;
+}
+
+body{
+    min-height:100dvh;
+    position:relative;
+}
+
+button,
+input,
+textarea,
+select{
+    font:inherit;
+}
+
+button{
+    color:var(--text);
+}
+
+input,
+textarea,
+select{
+    color:var(--text);
+    background:#050905;
+    border:1px solid var(--border);
+    border-radius:3px;
+    outline:none;
+}
+
+input:focus,
+textarea:focus,
+select:focus{
+    border-color:var(--green);
+    box-shadow:0 0 8px rgba(140,255,114,.14);
+}
+
+textarea{
+    resize:none;
+}
+
+button{
+    background:#081008;
+    border:1px solid var(--border);
+    border-radius:3px;
+    padding:8px 12px;
+    cursor:pointer;
+    transition:.12s ease;
+}
+
+button:hover{
+    background:#102010;
+}
+
+button:active{
+    transform:translateY(1px);
+}
+
+.hidden{
+    display:none !important;
+}
+
+/* CRT */
+
+body::before{
+    content:"";
+    position:fixed;
+    inset:0;
+    pointer-events:none;
+    z-index:9999;
+    background:
+        repeating-linear-gradient(
+            to bottom,
+            rgba(255,255,255,.018) 0px,
+            rgba(255,255,255,.018) 1px,
+            transparent 1px,
+            transparent 4px
+        );
+    mix-blend-mode:screen;
+    opacity:.5;
+}
+
+body::after{
+    content:"";
+    position:fixed;
+    inset:0;
+    pointer-events:none;
+    z-index:9998;
+    box-shadow:
+        inset 0 0 80px rgba(0,0,0,.8),
+        inset 0 0 25px rgba(100,255,80,.05);
+}
+
+/* APP */
+
+#app{
+    width:100%;
+    height:100dvh;
+    display:flex;
+    flex-direction:column;
+    padding:
+        max(8px, env(safe-area-inset-top))
+        max(8px, env(safe-area-inset-right))
+        max(5px, env(safe-area-inset-bottom))
+        max(8px, env(safe-area-inset-left));
+}
+
+/* HEADER */
+
+.header{
+    height:47px;
+    min-height:47px;
+    border-bottom:1px solid var(--border);
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    padding:0 9px;
+    gap:10px;
+}
+
+.logo{
+    font-weight:700;
+    letter-spacing:2px;
+    font-size:15px;
+    white-space:nowrap;
+    text-shadow:0 0 7px rgba(140,255,114,.45);
+}
+
+.header-center{
+    flex:1;
+    text-align:center;
+    font-size:11px;
+    opacity:.7;
+    white-space:nowrap;
+}
+
+.header-right{
+    display:flex;
+    align-items:center;
+    gap:8px;
+    font-size:10px;
+    white-space:nowrap;
+}
+
+.online{
+    width:7px;
+    height:7px;
+    border-radius:50%;
+    background:var(--green);
+    box-shadow:0 0 8px var(--green);
+}
+
+/* MAIN */
+
+.main{
+    flex:1;
+    min-height:0;
+    overflow:hidden;
+    position:relative;
+}
+
+.screen{
+    display:none;
+    width:100%;
+    height:100%;
+    padding:8px 0 4px;
+}
+
+.screen.active{
+    display:flex;
+}
+
+/* NAV */
+
+.nav{
+    height:45px;
+    min-height:45px;
+    border-top:1px solid var(--border);
+    display:flex;
+    align-items:stretch;
+    gap:3px;
+    padding-top:4px;
+}
+
+.nav button{
+    flex:1;
+    border:1px solid var(--border2);
+    font-size:10px;
+    padding:5px 3px;
+    min-width:0;
+    letter-spacing:.5px;
+}
+
+.nav button.active{
+    border-color:var(--green);
+    background:#102010;
+    box-shadow:inset 0 -2px 0 var(--green);
+}
+
+/* COMMON */
+
+.panel{
+    border:1px solid var(--border);
+    background:
+        linear-gradient(
+            135deg,
+            rgba(140,255,114,.025),
+            rgba(0,0,0,.15)
+        ),
+        var(--panel);
+    box-shadow:var(--shadow);
+}
+
+.panel-title{
+    border-bottom:1px solid var(--border2);
+    padding:7px 9px;
+    font-size:10px;
+    letter-spacing:1px;
+    color:var(--green);
+}
+
+.small-label{
+    font-size:9px;
+    color:var(--dim);
+    letter-spacing:.8px;
+}
+
+.muted{
+    color:var(--dim);
+}
+
+.danger{
+    color:var(--red);
+}
+
+.warning{
+    color:var(--yellow);
+}
+
+/* QUESTS */
+
+.quests-layout{
+    display:grid;
+    grid-template-columns:minmax(180px,30%) 1fr;
+    gap:8px;
+    width:100%;
+    height:100%;
+    min-height:0;
+}
+
+.quest-list-panel{
+    display:flex;
+    flex-direction:column;
+    min-height:0;
+}
+
+.quest-list{
+    flex:1;
+    min-height:0;
+    overflow-y:auto;
+    -webkit-overflow-scrolling:touch;
+}
+
+.quest-row{
+    min-height:42px;
+    border-bottom:1px solid rgba(140,255,114,.12);
+    display:flex;
+    align-items:center;
+    padding:5px 7px;
+    cursor:pointer;
+    gap:8px;
+}
+
+.quest-row:hover{
+    background:rgba(140,255,114,.05);
+}
+
+.quest-row.selected{
+    background:rgba(140,255,114,.10);
+    border-left:2px solid var(--green);
+}
+
+.quest-status{
+    width:9px;
+    height:9px;
+    flex:0 0 9px;
+    border:1px solid var(--green);
+    background:transparent;
+}
+
+.quest-status.active{
+    background:var(--green);
+    box-shadow:0 0 6px rgba(140,255,114,.6);
+}
+
+.quest-status.done{
+    border-color:var(--dim);
+    background:var(--dim);
+}
+
+.quest-status.inactive{
+    border-color:#5d5d5d;
+}
+
+.quest-name{
+    font-size:11px;
+    overflow:hidden;
+    text-overflow:ellipsis;
+    white-space:nowrap;
+}
+
+.quest-list-footer{
+    display:flex;
+    gap:5px;
+    padding:6px;
+    border-top:1px solid var(--border2);
+}
+
+.quest-list-footer button{
+    flex:1;
+    font-size:10px;
+}
+
+.quest-preview{
+    display:flex;
+    flex-direction:column;
+    min-width:0;
+    min-height:0;
+}
+
+.preview-content{
+    flex:1;
+    min-height:0;
+    display:flex;
+    flex-direction:column;
+    padding:9px;
+}
+
+.preview-top{
+    display:grid;
+    grid-template-columns:minmax(150px,42%) 1fr;
+    gap:12px;
+    min-height:0;
+    flex:1;
+}
+
+.preview-image{
+    border:1px solid var(--border2);
+    background:#030603;
+    min-height:0;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    overflow:hidden;
+}
+
+.preview-image img{
+    width:100%;
+    height:100%;
+    object-fit:cover;
+}
+
+.placeholder{
+    width:100%;
+    height:100%;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    text-align:center;
+    padding:20px;
+    color:var(--dim);
+    font-size:11px;
+    line-height:1.5;
+}
+
+.preview-description{
+    border-left:1px solid var(--border2);
+    padding-left:12px;
+    min-width:0;
+    overflow:auto;
+}
+
+.preview-description h2{
+    margin:0 0 10px;
+    font-size:18px;
+    color:var(--green);
+    letter-spacing:1px;
+}
+
+.preview-description p{
+    margin:0;
+    font-size:12px;
+    line-height:1.65;
+    white-space:pre-wrap;
+}
+
+.preview-actions{
+    display:flex;
+    gap:6px;
+    margin-top:8px;
+}
+
+.preview-actions button{
+    font-size:10px;
+}
+
+/* QUEST DATA */
+
+.quest-data-layout{
+    width:100%;
+    height:100%;
+    display:flex;
+    flex-direction:column;
+    gap:8px;
+}
+
+.quest-data-panel{
+    flex:1;
+    min-height:0;
+    display:flex;
+    flex-direction:column;
+}
+
+.form-grid{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:8px;
+    padding:9px;
+    overflow:auto;
+}
+
+.field{
+    display:flex;
+    flex-direction:column;
+    gap:5px;
+}
+
+.field.full{
+    grid-column:1/-1;
+}
+
+.field label{
+    font-size:9px;
+    color:var(--dim);
+    letter-spacing:.8px;
+}
+
+.field input,
+.field textarea,
+.field select{
+    width:100%;
+    padding:8px;
+    min-height:34px;
+}
+
+.field textarea{
+    min-height:110px;
+}
+
+.quest-data-actions{
+    display:flex;
+    gap:6px;
+    padding:7px;
+    border-top:1px solid var(--border2);
+}
+
+.quest-data-actions button{
+    font-size:10px;
+}
+
+/* INVENTORY */
+
+.inventory-layout{
+    width:100%;
+    height:100%;
+    display:grid;
+    grid-template-columns:150px 1fr;
+    gap:8px;
+    min-height:0;
+}
+
+.inventory-categories{
+    display:flex;
+    flex-direction:column;
+}
+
+.inventory-cat{
+    padding:12px 9px;
+    border-bottom:1px solid var(--border2);
+    cursor:pointer;
+    font-size:10px;
+}
+
+.inventory-cat.active{
+    background:rgba(140,255,114,.09);
+    color:var(--green);
+    border-left:2px solid var(--green);
+}
+
+.inventory-items-panel{
+    display:flex;
+    flex-direction:column;
+    min-height:0;
+}
+
+.inventory-items{
+    flex:1;
+    min-height:0;
+    overflow:auto;
+    padding:7px;
+}
+
+.inventory-item{
+    border:1px solid var(--border2);
+    margin-bottom:7px;
+    padding:8px;
+    display:grid;
+    grid-template-columns:1fr auto;
+    gap:8px;
+}
+
+.inventory-main{
+    min-width:0;
+}
+
+.inventory-name{
+    font-size:11px;
+    margin-bottom:4px;
+}
+
+.inventory-condition{
+    font-size:9px;
+    color:var(--dim);
+    margin-bottom:5px;
+}
+
+.condition-bar{
+    width:100%;
+    height:5px;
+    border:1px solid var(--border2);
+}
+
+.condition-fill{
+    height:100%;
+    background:var(--green);
+}
+
+.inventory-item-actions{
+    display:flex;
+    align-items:center;
+}
+
+.inventory-item-actions button{
+    padding:6px 8px;
+    font-size:9px;
+}
+
+.inventory-add{
+    display:grid;
+    grid-template-columns:1fr 120px 80px auto;
+    gap:5px;
+    padding:7px;
+    border-top:1px solid var(--border2);
+}
+
+.inventory-add input{
+    min-width:0;
+    padding:7px;
+}
+
+.inventory-add button{
+    font-size:9px;
+}
+
+.data-transfer{
+    border-top:1px solid var(--border2);
+    padding:5px 7px;
+    display:flex;
+    justify-content:flex-end;
+    align-items:center;
+    gap:6px;
+}
+
+.data-transfer span{
+    font-size:8px;
+    color:var(--dim);
+    margin-right:auto;
+    letter-spacing:.5px;
+}
+
+.data-transfer button{
+    padding:5px 8px;
+    font-size:8px;
+}
+
+/* STATS */
+
+.stats-layout{
+    width:100%;
+    height:100%;
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:8px;
+    min-height:0;
+}
+
+.stats-panel{
+    min-height:0;
+    display:flex;
+    flex-direction:column;
+}
+
+.stats-scroll{
+    flex:1;
+    min-height:0;
+    overflow:auto;
+    padding:10px;
+}
+
+.big-five-wrap{
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    height:240px;
+}
+
+.radar{
+    width:220px;
+    height:220px;
+}
+
+.radar polygon.grid{
+    fill:none;
+    stroke:rgba(140,255,114,.2);
+    stroke-width:1;
+}
+
+.radar polygon.data{
+    fill:rgba(140,255,114,.13);
+    stroke:var(--green);
+    stroke-width:1.5;
+}
+
+.radar line{
+    stroke:rgba(140,255,114,.16);
+}
+
+.radar text{
+    fill:var(--text);
+    font-size:8px;
+    font-family:monospace;
+}
+
+.stat-slider{
+    display:grid;
+    grid-template-columns:100px 1fr 35px;
+    gap:8px;
+    align-items:center;
+    margin-bottom:9px;
+}
+
+.stat-slider label{
+    font-size:9px;
+}
+
+.stat-slider input{
+    width:100%;
+}
+
+.stat-slider output{
+    font-size:9px;
+    text-align:right;
+}
+
+input[type="range"]{
+    accent-color:var(--green);
+}
+
+.meta-row{
+    display:grid;
+    grid-template-columns:110px 1fr 110px;
+    gap:7px;
+    align-items:center;
+    margin-bottom:11px;
+}
+
+.meta-label{
+    font-size:8px;
+    color:var(--dim);
+}
+
+.meta-label.right{
+    text-align:right;
+}
+
+.meta-row input{
+    width:100%;
+}
+
+.triangle{
+    position:relative;
+    height:280px;
+    margin-top:8px;
+}
+
+.triangle-shape{
+    position:absolute;
+    left:50%;
+    top:12px;
+    transform:translateX(-50%);
+    width:0;
+    height:0;
+    border-left:120px solid transparent;
+    border-right:120px solid transparent;
+    border-bottom:205px solid rgba(140,255,114,.06);
+}
+
+.triangle-line{
+    position:absolute;
+    left:50%;
+    top:12px;
+    transform:translateX(-50%);
+    width:240px;
+    height:205px;
+    border-left:1px solid var(--border);
+    border-right:1px solid var(--border);
+    clip-path:polygon(50% 0,100% 100%,0 100%);
+    border-bottom:1px solid var(--border);
+}
+
+.triangle-field{
+    position:absolute;
+    width:110px;
+    transform:translateX(-50%);
+}
+
+.triangle-field.top{
+    left:50%;
+    top:0;
+}
+
+.triangle-field.left{
+    left:calc(50% - 105px);
+    top:180px;
+}
+
+.triangle-field.right{
+    left:calc(50% + 105px);
+    top:180px;
+}
+
+.triangle-field label{
+    display:block;
+    font-size:8px;
+    color:var(--dim);
+    margin-bottom:4px;
+    text-align:center;
+}
+
+.triangle-field textarea{
+    width:100%;
+    height:50px;
+    padding:5px;
+    font-size:8px;
+}
+
+/* HEALTH */
+
+.health-layout{
+    width:100%;
+    height:100%;
+    display:grid;
+    grid-template-columns:minmax(250px,42%) 1fr;
+    gap:8px;
+    min-height:0;
+}
+
+.health-body-panel,
+.health-notes-panel{
+    min-height:0;
+    display:flex;
+    flex-direction:column;
+}
+
+.body-wrap{
+    flex:1;
+    min-height:0;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    padding:8px;
+    overflow:hidden;
+}
+
+.body-svg{
+    height:100%;
+    max-height:calc(100vh - 150px);
+    width:auto;
+    max-width:100%;
+}
+
+.body-zone{
+    cursor:pointer;
+    transition:.15s ease;
+}
+
+.body-zone.neutral{
+    fill:#172017;
+    stroke:#65a75a;
+}
+
+.body-zone.warning{
+    fill:rgba(255,232,107,.4);
+    stroke:var(--yellow);
+    filter:drop-shadow(0 0 4px rgba(255,232,107,.35));
+}
+
+.body-zone.danger{
+    fill:rgba(255,95,85,.45);
+    stroke:var(--red);
+    filter:drop-shadow(0 0 5px rgba(255,95,85,.4));
+}
+
+.body-zone:hover{
+    filter:brightness(1.3);
+}
+
+.health-legend{
+    border-top:1px solid var(--border2);
+    padding:7px;
+    display:flex;
+    gap:12px;
+    font-size:8px;
+    color:var(--dim);
+}
+
+.health-legend span{
+    display:flex;
+    align-items:center;
+    gap:4px;
+}
+
+.legend-dot{
+    width:7px;
+    height:7px;
+    border:1px solid currentColor;
+}
+
+.health-notes-list{
+    flex:1;
+    min-height:0;
+    overflow:auto;
+    padding:7px;
+}
+
+.zone-summary{
+    border:1px solid var(--border2);
+    padding:8px;
+    margin-bottom:6px;
+    cursor:pointer;
+}
+
+.zone-summary.selected{
+    border-color:var(--green);
+    background:rgba(140,255,114,.06);
+}
+
+.zone-summary-header{
+    display:flex;
+    justify-content:space-between;
+    font-size:10px;
+}
+
+.zone-count{
+    color:var(--green);
+}
+
+.health-entry{
+    margin-top:7px;
+    padding:7px;
+    border-left:2px solid var(--border);
+    background:rgba(140,255,114,.025);
+}
+
+.health-entry-text{
+    font-size:9px;
+    line-height:1.45;
+    white-space:pre-wrap;
+}
+
+.health-entry-actions{
+    display:flex;
+    gap:5px;
+    margin-top:5px;
+}
+
+.health-entry-actions button{
+    font-size:8px;
+    padding:4px 7px;
+}
+
+.health-add{
+    border-top:1px solid var(--border2);
+    padding:7px;
+    display:flex;
+    gap:5px;
+}
+
+.health-add input{
+    flex:1;
+    min-width:0;
+    padding:7px;
+}
+
+.health-add button{
+    font-size:9px;
+}
+
+/* NOTES */
+
+.notes-layout{
+    width:100%;
+    height:100%;
+    display:grid;
+    grid-template-columns:30% 1fr;
+    gap:8px;
+    min-height:0;
+}
+
+.notes-list-panel,
+.note-editor-panel{
+    min-height:0;
+    display:flex;
+    flex-direction:column;
+}
+
+.notes-list{
+    flex:1;
+    min-height:0;
+    overflow:auto;
+}
+
+.note-row{
+    padding:9px;
+    border-bottom:1px solid var(--border2);
+    cursor:pointer;
+}
+
+.note-row.selected{
+    background:rgba(140,255,114,.09);
+    border-left:2px solid var(--green);
+}
+
+.note-title{
+    font-size:10px;
+    white-space:nowrap;
+    overflow:hidden;
+    text-overflow:ellipsis;
+}
+
+.note-preview{
+    font-size:8px;
+    color:var(--dim);
+    margin-top:4px;
+    white-space:nowrap;
+    overflow:hidden;
+    text-overflow:ellipsis;
+}
+
+.notes-actions{
+    display:flex;
+    gap:5px;
+    padding:6px;
+    border-top:1px solid var(--border2);
+}
+
+.notes-actions button{
+    flex:1;
+    font-size:9px;
+}
+
+.note-editor{
+    flex:1;
+    min-height:0;
+    display:flex;
+    flex-direction:column;
+    gap:7px;
+    padding:9px;
+}
+
+.note-editor input{
+    padding:8px;
+}
+
+.note-editor textarea{
+    flex:1;
+    min-height:0;
+    padding:9px;
+    line-height:1.5;
+}
+
+.note-editor-actions{
+    display:flex;
+    gap:5px;
+}
+
+.note-editor-actions button{
+    font-size:9px;
+}
+
+/* MODAL */
+
+.modal{
+    position:fixed;
+    inset:0;
+    z-index:10000;
+    background:rgba(0,0,0,.78);
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    padding:15px;
+}
+
+.modal-box{
+    width:min(650px,100%);
+    max-height:90dvh;
+    display:flex;
+    flex-direction:column;
+    background:#071007;
+    border:1px solid var(--green);
+    box-shadow:0 0 30px rgba(100,255,80,.16);
+}
+
+.modal-title{
+    padding:9px;
+    border-bottom:1px solid var(--border2);
+    font-size:11px;
+    letter-spacing:1px;
+}
+
+.modal-content{
+    overflow:auto;
+    padding:9px;
+}
+
+.modal-actions{
+    display:flex;
+    gap:6px;
+    padding:7px;
+    border-top:1px solid var(--border2);
+}
+
+.modal-actions button{
+    font-size:10px;
+}
+
+.quest-edit-grid{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:8px;
+}
+
+.quest-edit-grid .full{
+    grid-column:1/-1;
+}
+
+.quest-edit-grid label{
+    display:block;
+    font-size:9px;
+    color:var(--dim);
+    margin-bottom:4px;
+}
+
+.quest-edit-grid input,
+.quest-edit-grid textarea,
+.quest-edit-grid select{
+    width:100%;
+    padding:8px;
+}
+
+.quest-edit-grid textarea{
+    height:130px;
+}
+
+.image-preview-edit{
+    height:130px;
+    border:1px solid var(--border2);
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    overflow:hidden;
+    margin-top:5px;
+}
+
+.image-preview-edit img{
+    width:100%;
+    height:100%;
+    object-fit:contain;
+}
+
+.empty{
+    padding:25px;
+    text-align:center;
+    color:var(--dim);
+    font-size:10px;
+}
+
+/* MOBILE */
+
+@media (max-width:700px) and (orientation:portrait){
+
+    body{
+        overflow:auto;
+    }
+
+    #app{
+        height:auto;
+        min-height:100dvh;
+    }
+
+    .main{
+        min-height:calc(100dvh - 100px);
+        overflow:auto;
+    }
+
+    .screen{
+        min-height:calc(100dvh - 100px);
+        height:auto;
+        overflow:auto;
+    }
+
+    .quests-layout,
+    .inventory-layout,
+    .stats-layout,
+    .health-layout,
+    .notes-layout{
+        grid-template-columns:1fr;
+        height:auto;
+    }
+
+    .quest-list-panel{
+        height:250px;
+    }
+
+    .quest-preview{
+        min-height:450px;
+    }
+
+    .preview-top{
+        grid-template-columns:1fr;
+    }
+
+    .preview-image{
+        height:220px;
+    }
+
+    .preview-description{
+        border-left:none;
+        border-top:1px solid var(--border2);
+        padding-left:0;
+        padding-top:10px;
+    }
+
+    .form-grid,
+    .quest-edit-grid{
+        grid-template-columns:1fr;
+    }
+
+    .field.full,
+    .quest-edit-grid .full{
+        grid-column:auto;
+    }
+
+    .inventory-categories{
+        display:grid;
+        grid-template-columns:repeat(4,1fr);
+    }
+
+    .inventory-cat{
+        text-align:center;
+        border-right:1px solid var(--border2);
+    }
+
+    .inventory-add{
+        grid-template-columns:1fr 90px;
+    }
+
+    .inventory-add button{
+        grid-column:1/-1;
+    }
+
+    .health-layout{
+        min-height:700px;
+    }
+
+    .body-wrap{
+        min-height:430px;
+    }
+
+    .body-svg{
+        max-height:420px;
+    }
+
+    .health-notes-panel{
+        min-height:350px;
+    }
+
+    .notes-layout{
+        min-height:700px;
+    }
+
+    .notes-list-panel{
+        min-height:260px;
+    }
+
+    .header-center{
+        display:none;
+    }
+
+    .logo{
+        font-size:12px;
+    }
+}
+
+@media (max-height:450px){
+
+    .header{
+        height:39px;
+        min-height:39px;
+    }
+
+    .nav{
+        height:39px;
+        min-height:39px;
+    }
+
+    .big-five-wrap{
+        height:180px;
+    }
+
+    .radar{
+        width:170px;
+        height:170px;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<div id="app">
+
+    <header class="header">
+        <div class="logo">PIP BOY 1998</div>
+
+        <div class="header-center">
+            // PERSONAL SYSTEM //
+        </div>
+
+        <div class="header-right">
+            <span id="clock">00:00:00</span>
+            <span class="online"></span>
+            <span>SYSTEM ONLINE</span>
+        </div>
+    </header>
+
+    <main class="main">
+
+        <!-- QUESTS -->
+        <section id="screen-quests" class="screen active">
+            <div class="quests-layout">
+
+                <div class="panel quest-list-panel">
+                    <div class="panel-title">QUEST LOG</div>
+
+                    <div id="questList" class="quest-list"></div>
+
+                    <div class="quest-list-footer">
+                        <button onclick="openQuestModal()">+ ADD QUEST</button>
+                        <button onclick="editSelectedQuest()">EDIT QUEST</button>
+                    </div>
+                </div>
+
+                <div class="panel quest-preview">
+                    <div class="panel-title">SELECTED QUEST</div>
+
+                    <div id="questPreview" class="preview-content"></div>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- QUEST DATA -->
+        <section id="screen-data" class="screen">
+
+            <div class="quest-data-layout">
+
+                <div class="panel quest-data-panel">
+                    <div class="panel-title">QUEST DATA</div>
+
+                    <div id="questDataForm" class="form-grid"></div>
+
+                    <div class="quest-data-actions">
+                        <button onclick="saveQuestData()">SAVE DATA</button>
+                        <button onclick="deleteSelectedQuest()" class="danger">DELETE QUEST</button>
+                    </div>
+                </div>
+
+            </div>
+
+        </section>
+
+        <!-- INVENTORY -->
+        <section id="screen-inventory" class="screen">
+
+            <div class="inventory-layout">
+
+                <div class="panel inventory-categories">
+
+                    <div class="panel-title">INVENTORY</div>
+
+                    <div class="inventory-cat active"
+                         data-cat="items"
+                         onclick="selectInventoryCategory('items')">
+                        ITEMS
+                    </div>
+
+                    <div class="inventory-cat"
+                         data-cat="money"
+                         onclick="selectInventoryCategory('money')">
+                        MONEY
+                    </div>
+
+                    <div class="inventory-cat"
+                         data-cat="doc"
+                         onclick="selectInventoryCategory('doc')">
+                        DOC
+                    </div>
+
+                    <div class="inventory-cat"
+                         data-cat="medicine"
+                         onclick="selectInventoryCategory('medicine')">
+                        MEDICINE
+                    </div>
+
+                </div>
+
+                <div class="panel inventory-items-panel">
+
+                    <div class="panel-title" id="inventoryTitle">
+                        ITEMS
+                    </div>
+
+                    <div id="inventoryItems" class="inventory-items"></div>
+
+                    <div class="inventory-add">
+                        <input id="inventoryName"
+                               placeholder="ITEM / DOCUMENT / MEDICINE">
+
+                        <input id="inventoryCondition"
+                               type="number"
+                               min="0"
+                               max="100"
+                               value="100"
+                               placeholder="%">
+
+                        <input id="inventoryState"
+                               placeholder="STATE">
+
+                        <button onclick="addInventoryItem()">ADD</button>
+                    </div>
+
+                    <div class="data-transfer">
+                        <span>DATA TRANSFER</span>
+                        <button onclick="exportData()">EXPORT</button>
+                        <button onclick="document.getElementById('importFile').click()">IMPORT</button>
+                    </div>
+
+                </div>
+
+            </div>
+
+        </section>
+
+        <!-- STATS -->
+        <section id="screen-stats" class="screen">
+
+            <div class="stats-layout">
+
+                <div class="panel stats-panel">
+
+                    <div class="panel-title">PERSONAL PARAMETERS // BIG FIVE</div>
+
+                    <div class="stats-scroll">
+
+                        <div class="big-five-wrap">
+                            <svg class="radar"
+                                 id="radar"
+                                 viewBox="0 0 220 220">
+                            </svg>
+                        </div>
+
+                        <div id="bigFiveControls"></div>
+
+                    </div>
+
+                </div>
+
+                <div class="panel stats-panel">
+
+                    <div class="panel-title">METAPROGRAMS // PROFILE</div>
+
+                    <div class="stats-scroll">
+
+                        <div id="metaControls"></div>
+
+                        <div class="panel-title"
+                             style="margin:20px -10px 0;">
+                            PERSONAL CONTRADICTIONS
+                        </div>
+
+                        <div class="triangle">
+
+                            <div class="triangle-shape"></div>
+                            <div class="triangle-line"></div>
+
+                            <div class="triangle-field top">
+                                <label>SACRED WOUND</label>
+                                <textarea
+                                    id="sacredWound"
+                                    placeholder="..."
+                                    onchange="saveStats()"></textarea>
+                            </div>
+
+                            <div class="triangle-field left">
+                                <label>CONTRADICTION A</label>
+                                <textarea
+                                    id="contradictionA"
+                                    placeholder="..."
+                                    onchange="saveStats()"></textarea>
+                            </div>
+
+                            <div class="triangle-field right">
+                                <label>CONTRADICTION B</label>
+                                <textarea
+                                    id="contradictionB"
+                                    placeholder="..."
+                                    onchange="saveStats()"></textarea>
+                            </div>
+
+                        </div>
+
+                    </div>
+                </div>
+
+            </div>
+
+        </section>
+
+        <!-- HEALTH -->
+        <section id="screen-health" class="screen">
+
+            <div class="health-layout">
+
+                <div class="panel health-body-panel">
+
+                    <div class="panel-title">
+                        HEALTH // BODY STATUS
+                    </div>
+
+                    <div class="body-wrap">
+
+                        <svg class="body-svg"
+                             viewBox="0 0 260 520"
+                             id="bodySvg">
+
+                            <!-- HEAD -->
+                            <circle id="zone-head"
+                                    class="body-zone neutral"
+                                    data-zone="head"
+                                    cx="130"
+                                    cy="55"
+                                    r="34"
+                                    onclick="openHealthZone('head')"/>
+
+                            <!-- NECK -->
+                            <rect x="116"
+                                  y="87"
+                                  width="28"
+                                  height="28"
+                                  rx="6"
+                                  fill="#172017"
+                                  stroke="#65a75a"/>
+
+                            <!-- CHEST -->
+                            <path id="zone-chest"
+                                  class="body-zone neutral"
+                                  data-zone="chest"
+                                  d="M88 110
+                                     Q130 95 172 110
+                                     L185 225
+                                     Q130 245 75 225
+                                     Z"
+                                  onclick="openHealthZone('chest')"/>
+
+                            <!-- ABDOMEN -->
+                            <path id="zone-abdomen"
+                                  class="body-zone neutral"
+                                  data-zone="abdomen"
+                                  d="M88 220
+                                     Q130 235 172 220
+                                     L168 315
+                                     Q130 330 92 315
+                                     Z"
+                                  onclick="openHealthZone('abdomen')"/>
+
+                            <!-- LEFT ARM -->
+                            <path id="zone-leftArm"
+                                  class="body-zone neutral"
+                                  data-zone="leftArm"
+                                  d="M88 115
+                                     L62 125
+                                     L30 220
+                                     Q27 235 40 240
+                                     Q52 242 58 228
+                                     L98 155
+                                     Z"
+                                  onclick="openHealthZone('leftArm')"/>
+
+                            <!-- RIGHT ARM -->
+                            <path id="zone-rightArm"
+                                  class="body-zone neutral"
+                                  data-zone="rightArm"
+                                  d="M172 115
+                                     L198 125
+                                     L230 220
+                                     Q233 235 220 240
+                                     Q208 242 202 228
+                                     L162 155
+                                     Z"
+                                  onclick="openHealthZone('rightArm')"/>
+
+                            <!-- LEFT LEG -->
+                            <path id="zone-leftLeg"
+                                  class="body-zone neutral"
+                                  data-zone="leftLeg"
+                                  d="M92 305
+                                     L129 310
+                                     L125 470
+                                     Q124 490 108 492
+                                     Q92 491 92 472
+                                     Z"
+                                  onclick="openHealthZone('leftLeg')"/>
+
+                            <!-- RIGHT LEG -->
+                            <path id="zone-rightLeg"
+                                  class="body-zone neutral"
+                                  data-zone="rightLeg"
+                                  d="M131 310
+                                     L168 305
+                                     L168 472
+                                     Q168 491 152 492
+                                     Q136 490 135 470
+                                     Z"
+                                  onclick="openHealthZone('rightLeg')"/>
+
+                            <!-- SIMPLE BODY DETAILS -->
+                            <circle cx="119" cy="49" r="3" fill="#071007"/>
+                            <circle cx="141" cy="49" r="3" fill="#071007"/>
+                            <path d="M120 69 Q130 75 140 69"
+                                  fill="none"
+                                  stroke="#65a75a"
+                                  stroke-width="2"/>
+
+                        </svg>
+
+                    </div>
+
+                    <div class="health-legend">
+                        <span>
+                            <i class="legend-dot"></i>
+                            0
+                        </span>
+
+                        <span class="warning">
+                            <i class="legend-dot"></i>
+                            1–2
+                        </span>
+
+                        <span class="danger">
+                            <i class="legend-dot"></i>
+                            3+
+                        </span>
+                    </div>
+
+                </div>
+
+                <div class="panel health-notes-panel">
+
+                    <div class="panel-title">
+                        HEALTH RECORD
+                    </div>
+
+                    <div id="healthNotesList"
+                         class="health-notes-list"></div>
+
+                    <div class="health-add">
+                        <input id="healthQuickInput"
+                               placeholder="Select a body zone first...">
+
+                        <button onclick="addHealthEntry()">
+                            ADD
+                        </button>
+                    </div>
+
+                </div>
+
+            </div>
+
+        </section>
+
+        <!-- NOTES -->
+        <section id="screen-notes" class="screen">
+
+            <div class="notes-layout">
+
+                <div class="panel notes-list-panel">
+
+                    <div class="panel-title">NOTES</div>
+
+                    <div id="notesList"
+                         class="notes-list"></div>
+
+                    <div class="notes-actions">
+                        <button onclick="addNote()">+ NEW</button>
+                        <button onclick="deleteSelectedNote()"
+                                class="danger">
+                            DELETE
+                        </button>
+                    </div>
+
+                </div>
+
+                <div class="panel note-editor-panel">
+
+                    <div class="panel-title">
+                        NOTE CONTENT
+                    </div>
+
+                    <div id="noteEditor"
+                         class="note-editor"></div>
+
+                </div>
+
+            </div>
+
+        </section>
+
+    </main>
+
+    <nav class="nav">
+
+        <button class="active"
+                onclick="showScreen('quests',this)">
+            QUESTS
+        </button>
+
+        <button onclick="showScreen('data',this)">
+            QUEST DATA
+        </button>
+
+        <button onclick="showScreen('inventory',this)">
+            INVENTORY
+        </button>
+
+        <button onclick="showScreen('stats',this)">
+            STATS
+        </button>
+
+        <button onclick="showScreen('health',this)">
+            HEALTH
+        </button>
+
+        <button onclick="showScreen('notes',this)">
+            NOTES
+        </button>
+
+    </nav>
+
+</div>
+
+<input id="importFile"
+       type="file"
+       accept=".json,application/json"
+       class="hidden">
+
+<!-- QUEST MODAL -->
+
+<div id="questModal" class="modal hidden">
+
+    <div class="modal-box">
+
+        <div class="modal-title" id="questModalTitle">
+            ADD QUEST
+        </div>
+
+        <div class="modal-content">
+
+            <div class="quest-edit-grid">
+
+                <div class="full">
+                    <label>QUEST NAME</label>
+                    <input id="questNameInput">
+                </div>
+
+                <div class="full">
+                    <label>DESCRIPTION</label>
+                    <textarea id="questDescriptionInput"></textarea>
+                </div>
+
+                <div>
+                    <label>STATUS</label>
+                    <select id="questStatusInput">
+                        <option value="active">ACTIVE</option>
+                        <option value="inactive">INACTIVE</option>
+                        <option value="done">COMPLETED</option>
+                    </select>
+                </div>
+
+                <div>
+                    <label>IMAGE</label>
+                    <input id="questImageInput"
+                           type="file"
+                           accept="image/*">
+                </div>
+
+                <div class="full">
+                    <div id="editImagePreview"
+                         class="image-preview-edit">
+                        <span class="muted">NO IMAGE</span>
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+
+        <div class="modal-actions">
+
+            <button onclick="saveQuestFromModal()">
+                SAVE
+            </button>
+
+            <button onclick="closeQuestModal()">
+                CANCEL
+            </button>
+
+        </div>
+
+    </div>
+
+</div>
+
+<script>
+/* =========================================================
+   PIP BOY 1998
+   IndexedDB + PWA
+========================================================= */
+
+const DB_NAME = "pipboy_1998_db";
+const DB_VERSION = 1;
+const STORE = "app";
+
+let db = null;
+
+function uid(){
+    if(window.crypto && crypto.randomUUID){
+        return crypto.randomUUID();
+    }
+
+    return Date.now().toString(36) +
+           Math.random().toString(36).slice(2);
+}
+
+function defaultState(){
+
+    return {
+
+        quests: [
+            {
+                id: uid(),
+                name: "PhD applications",
+                description:
+                    "Find and prepare funded doctoral opportunities in cognitive neuroscience and behavioral science.",
+                image: "",
+                status: "active",
+                what: "",
+                deadline: "",
+                location: "",
+                comments: ""
+            }
+        ],
+
+        selectedQuest: null,
+
+        inventory: {
+            items: [],
+            money: [],
+            doc: [],
+            medicine: []
+        },
+
+        inventoryCategory: "items",
+
+        bigFive: [
+            70,
+            70,
+            50,
+            60,
+            40
+        ],
+
+        metaPrograms: [
+            {
+                left:"Движение ОТ",
+                right:"Движение К",
+                value:50
+            },
+            {
+                left:"Внешняя референция",
+                right:"Внутренняя референция",
+                value:50
+            },
+            {
+                left:"Рефлексивный",
+                right:"Активный",
+                value:50
+            },
+            {
+                left:"Процедурность",
+                right:"Возможности",
+                value:50
+            },
+            {
+                left:"Общее",
+                right:"Детали",
+                value:50
+            },
+            {
+                left:"Сам",
+                right:"Другой / Система",
+                value:50
+            },
+            {
+                left:"Диссоциация",
+                right:"Ассоциация",
+                value:50
+            },
+            {
+                left:"Сходство",
+                right:"Различия",
+                value:50
+            }
+        ],
+
+        sacredWound:"",
+        contradictionA:"",
+        contradictionB:"",
+
+        health:{
+            head:[],
+            eyes:[],
+            chest:[],
+            abdomen:[],
+            leftArm:[],
+            rightArm:[],
+            leftLeg:[],
+            rightLeg:[]
+        },
+
+        notes:[],
+
+        selectedNote:null,
+
+        selectedHealthZone:null
+    };
+}
+
+let state = defaultState();
+
+function deepMergeState(saved){
+
+    const base = defaultState();
+
+    if(!saved || typeof saved !== "object"){
+        return base;
+    }
+
+    return {
+        ...base,
+        ...saved,
+
+        inventory:{
+            ...base.inventory,
+            ...(saved.inventory || {})
+        },
+
+        health:{
+            ...base.health,
+            ...(saved.health || {})
+        },
+
+        quests:Array.isArray(saved.quests)
+            ? saved.quests
+            : base.quests,
+
+        notes:Array.isArray(saved.notes)
+            ? saved.notes
+            : [],
+
+        bigFive:Array.isArray(saved.bigFive)
+            ? saved.bigFive
+            : base.bigFive,
+
+        metaPrograms:Array.isArray(saved.metaPrograms)
+            ? saved.metaPrograms
+            : base.metaPrograms
+    };
+}
+
+/* =========================================================
+   INDEXED DB
+========================================================= */
+
+function openDB(){
+
+    return new Promise((resolve,reject)=>{
+
+        const request =
+            indexedDB.open(DB_NAME,DB_VERSION);
+
+        request.onupgradeneeded = event => {
+
+            const database = event.target.result;
+
+            if(!database.objectStoreNames.contains(STORE)){
+                database.createObjectStore(STORE);
+            }
+        };
+
+        request.onsuccess = event => {
+
+            db = event.target.result;
+
+            resolve(db);
+        };
+
+        request.onerror = () => {
+            reject(request.error);
+        };
+    });
+}
+
+function dbGet(key){
+
+    return new Promise((resolve,reject)=>{
+
+        const tx =
+            db.transaction(STORE,"readonly");
+
+        const store = tx.objectStore(STORE);
+
+        const request = store.get(key);
+
+        request.onsuccess = () =>
+            resolve(request.result);
+
+        request.onerror = () =>
+            reject(request.error);
+    });
+}
+
+function dbSet(key,value){
+
+    return new Promise((resolve,reject)=>{
+
+        const tx =
+            db.transaction(STORE,"readwrite");
+
+        const store = tx.objectStore(STORE);
+
+        const request =
+            store.put(value,key);
+
+        request.onsuccess = () =>
+            resolve();
+
+        request.onerror = () =>
+            reject(request.error);
+    });
+}
+
+async function saveState(){
+
+    try{
+        await dbSet("state",state);
+    }
+    catch(error){
+        console.error("IndexedDB save error:",error);
+    }
+}
+
+async function loadState(){
+
+    try{
+
+        const saved = await dbGet("state");
+
+        state = deepMergeState(saved);
+
+        if(
+            !state.selectedQuest &&
+            state.quests.length
+        ){
+            state.selectedQuest =
+                state.quests[0].id;
+        }
+
+    }
+    catch(error){
+
+        console.error(
+            "IndexedDB load error:",
+            error
+        );
+
+        state = defaultState();
+    }
+}
+
+/* =========================================================
+   INITIALIZATION
+========================================================= */
+
+document.addEventListener(
+    "DOMContentLoaded",
+    init
+);
+
+async function init(){
+
+    await openDB();
+
+    await loadState();
+
+    setupImport();
+
+    renderAll();
+
+    updateClock();
+
+    setInterval(
+        updateClock,
+        1000
+    );
+
+    registerServiceWorker();
+
+    window.addEventListener(
+        "beforeunload",
+        saveState
+    );
+}
+
+async function registerServiceWorker(){
+
+    if(
+        "serviceWorker" in navigator &&
+        location.protocol !== "file:"
+    ){
+
+        try{
+
+            await navigator.serviceWorker.register(
+                "./sw.js"
+            );
+
+            console.log(
+                "PIP BOY service worker registered."
+            );
+
+        }
+        catch(error){
+
+            console.warn(
+                "Service worker unavailable:",
+                error
+            );
+        }
+    }
+}
+
+/* =========================================================
+   CLOCK
+========================================================= */
+
+function updateClock(){
+
+    const now = new Date();
+
+    document.getElementById(
+        "clock"
+    ).textContent =
+        now.toLocaleTimeString(
+            [],
+            {
+                hour:"2-digit",
+                minute:"2-digit",
+                second:"2-digit"
+            }
+        );
+}
+
+/* =========================================================
+   NAVIGATION
+========================================================= */
+
+function showScreen(name,button){
+
+    document.querySelectorAll(
+        ".screen"
+    ).forEach(screen => {
+
+        screen.classList.remove(
+            "active"
+        );
+    });
+
+    document.getElementById(
+        "screen-" + name
+    ).classList.add("active");
+
+    document.querySelectorAll(
+        ".nav button"
+    ).forEach(btn => {
+
+        btn.classList.remove(
+            "active"
+        );
+    });
+
+    if(button){
+        button.classList.add("active");
+    }
+}
+
+/* =========================================================
+   QUESTS
+========================================================= */
+
+function renderQuests(){
+
+    const list =
+        document.getElementById(
+            "questList"
+        );
+
+    list.innerHTML = "";
+
+    if(!state.quests.length){
+
+        list.innerHTML =
+            '<div class="empty">NO QUESTS</div>';
+
+        document.getElementById(
+            "questPreview"
+        ).innerHTML =
+            '<div class="empty">ADD A QUEST</div>';
+
+        return;
+    }
+
+    state.quests.forEach(quest => {
+
+        const row =
+            document.createElement(
+                "div"
+            );
+
+        row.className =
+            "quest-row" +
+            (
+                quest.id === state.selectedQuest
+                    ? " selected"
+                    : ""
+            );
+
+        const status =
+            document.createElement(
+                "span"
+            );
+
+        status.className =
+            "quest-status " +
+            (quest.status || "active");
+
+        const name =
+            document.createElement(
+                "span"
+            );
+
+        name.className =
+            "quest-name";
+
+        name.textContent =
+            quest.name || "UNTITLED QUEST";
+
+        row.appendChild(status);
+        row.appendChild(name);
+
+        row.onclick = () => {
+
+            state.selectedQuest =
+                quest.id;
+
+            saveState();
+
+            renderQuests();
+            renderQuestData();
+        };
+
+        list.appendChild(row);
+    });
+
+    renderQuestPreview();
+}
+
+function getSelectedQuest(){
+
+    return state.quests.find(
+        q =>
+            q.id === state.selectedQuest
+    ) || null;
+}
+
+function renderQuestPreview(){
+
+    const container =
+        document.getElementById(
+            "questPreview"
+        );
+
+    const quest =
+        getSelectedQuest();
+
+    if(!quest){
+
+        container.innerHTML =
+            '<div class="empty">SELECT A QUEST</div>';
+
+        return;
+    }
+
+    const image =
+        quest.image
+            ? `
+                <img
+                    src="${escapeAttribute(quest.image)}"
+                    alt=""
+                >
+              `
+            : `
+                <div class="placeholder">
+                    NO VISUAL DATA<br>
+                    QUEST IMAGE NOT ASSIGNED
+                </div>
+              `;
+
+    container.innerHTML = `
+
+        <div class="preview-top">
+
+            <div class="preview-image">
+                ${image}
+            </div>
+
+            <div class="preview-description">
+
+                <h2>
+                    ${escapeHTML(
+                        quest.name ||
+                        "UNTITLED QUEST"
+                    )}
+                </h2>
+
+                <p>
+                    ${escapeHTML(
+                        quest.description ||
+                        "No description."
+                    )}
+                </p>
+
+            </div>
+
+        </div>
+
+        <div class="preview-actions">
+
+            <button
+                onclick="editSelectedQuest()">
+                EDIT QUEST
+            </button>
+
+            <button
+                onclick="showQuestData()">
+                QUEST DATA
+            </button>
+
+        </div>
+    `;
+}
+
+function openQuestModal(editId=null){
+
+    const modal =
+        document.getElementById(
+            "questModal"
+        );
+
+    modal.dataset.editId =
+        editId || "";
+
+    document.getElementById(
+        "questModalTitle"
+    ).textContent =
+        editId
+            ? "EDIT QUEST"
+            : "ADD QUEST";
+
+    const quest =
+        editId
+            ? state.quests.find(
+                q => q.id === editId
+              )
+            : null;
+
+    document.getElementById(
+        "questNameInput"
+    ).value =
+        quest?.name || "";
+
+    document.getElementById(
+        "questDescriptionInput"
+    ).value =
+        quest?.description || "";
+
+    document.getElementById(
+        "questStatusInput"
+    ).value =
+        quest?.status || "active";
+
+    document.getElementById(
+        "questImageInput"
+    ).value = "";
+
+    renderEditImagePreview(
+        quest?.image || ""
+    );
+
+    modal.classList.remove(
+        "hidden"
+    );
+}
+
+function editSelectedQuest(){
+
+    if(!state.selectedQuest){
+
+        openQuestModal();
+
+        return;
+    }
+
+    openQuestModal(
+        state.selectedQuest
+    );
+}
+
+function closeQuestModal(){
+
+    document.getElementById(
+        "questModal"
+    ).classList.add(
+        "hidden"
+    );
+}
+
+function renderEditImagePreview(image){
+
+    const preview =
+        document.getElementById(
+            "editImagePreview"
+        );
+
+    if(image){
+
+        preview.innerHTML = `
+            <img
+                src="${escapeAttribute(image)}"
+                alt=""
+            >
+        `;
+
+    }else{
+
+        preview.innerHTML =
+            '<span class="muted">NO IMAGE</span>';
+    }
+}
+
+document.getElementById(
+    "questImageInput"
+).addEventListener(
+    "change",
+    event => {
+
+        const file =
+            event.target.files[0];
+
+        if(!file){
+            return;
+        }
+
+        const reader =
+            new FileReader();
+
+        reader.onload = () => {
+
+            renderEditImagePreview(
+                reader.result
+            );
+        };
+
+        reader.readAsDataURL(file);
+    }
+);
+
+async function saveQuestFromModal(){
+
+    const modal =
+        document.getElementById(
+            "questModal"
+        );
+
+    const editId =
+        modal.dataset.editId;
+
+    const name =
+        document.getElementById(
+            "questNameInput"
+        ).value.trim();
+
+    const description =
+        document.getElementById(
+            "questDescriptionInput"
+        ).value.trim();
+
+    const status =
+        document.getElementById(
+            "questStatusInput"
+        ).value;
+
+    if(!name){
+
+        alert(
+            "QUEST NAME REQUIRED"
+        );
+
+        return;
+    }
+
+    const imageInput =
+        document.getElementById(
+            "questImageInput"
+        );
+
+    const file =
+        imageInput.files[0];
+
+    let image = "";
+
+    if(editId){
+
+        const quest =
+            state.quests.find(
+                q => q.id === editId
+            );
+
+        if(!quest){
+            return;
+        }
+
+        image =
+            quest.image || "";
+
+        if(file){
+            image =
+                await fileToDataURL(file);
+        }
+
+        quest.name =
+            name;
+
+        quest.description =
+            description;
+
+        quest.status =
+            status;
+
+        quest.image =
+            image;
+
+        state.selectedQuest =
+            quest.id;
+
+    }else{
+
+        if(file){
+            image =
+                await fileToDataURL(file);
+        }
+
+        const quest = {
+
+            id:uid(),
+
+            name,
+
+            description,
+
+            image,
+
+            status,
+
+            what:"",
+            deadline:"",
+            location:"",
+            comments:""
+        };
+
+        state.quests.push(
+            quest
+        );
+
+        state.selectedQuest =
+            quest.id;
+    }
+
+    await saveState();
+
+    closeQuestModal();
+
+    renderAll();
+}
+
+function fileToDataURL(file){
+
+    return new Promise(
+        (resolve,reject)=>{
+
+            const reader =
+                new FileReader();
+
+            reader.onload = () =>
+                resolve(
+                    reader.result
+                );
+
+            reader.onerror = () =>
+                reject(
+                    reader.error
+                );
+
+            reader.readAsDataURL(file);
+        }
+    );
+}
+
+function deleteSelectedQuest(){
+
+    if(!state.selectedQuest){
+        return;
+    }
+
+    const quest =
+        getSelectedQuest();
+
+    if(!quest){
+        return;
+    }
+
+    if(
+        !confirm(
+            `DELETE QUEST "${quest.name}"?`
+        )
+    ){
+        return;
+    }
+
+    state.quests =
+        state.quests.filter(
+            q =>
+                q.id !==
+                state.selectedQuest
+        );
+
+    state.selectedQuest =
+        state.quests[0]?.id ||
+        null;
+
+    saveState();
+
+    renderAll();
+}
+
+function showQuestData(){
+
+    const button =
+        [...document.querySelectorAll(".nav button")]
+        .find(
+            b =>
+                b.textContent.trim()
+                === "QUEST DATA"
+        );
+
+    showScreen(
+        "data",
+        button
+    );
+}
+
+/* =========================================================
+   QUEST DATA
+========================================================= */
+
+function renderQuestData(){
+
+    const container =
+        document.getElementById(
+            "questDataForm"
+        );
+
+    const quest =
+        getSelectedQuest();
+
+    if(!quest){
+
+        container.innerHTML =
+            '<div class="empty">SELECT A QUEST FIRST</div>';
+
+        return;
+    }
+
+    container.innerHTML = `
+
+        <div class="field full">
+
+            <label>
+                WHAT NEEDS TO BE DONE
+            </label>
+
+            <textarea id="questWhat">${escapeHTML(
+                quest.what || ""
+            )}</textarea>
+
+        </div>
+
+        <div class="field">
+
+            <label>DEADLINE / TIMEFRAME</label>
+
+            <input
+                id="questDeadline"
+                value="${escapeAttribute(
+                    quest.deadline || ""
+                )}"
+                placeholder="e.g. October 2026"
+            >
+
+        </div>
+
+        <div class="field">
+
+            <label>LOCATION</label>
+
+            <input
+                id="questLocation"
+                value="${escapeAttribute(
+                    quest.location || ""
+                )}"
+                placeholder="..."
+            >
+
+        </div>
+
+        <div class="field full">
+
+            <label>COMMENTS</label>
+
+            <textarea id="questComments">${escapeHTML(
+                quest.comments || ""
+            )}</textarea>
+
+        </div>
+    `;
+}
+
+async function saveQuestData(){
+
+    const quest =
+        getSelectedQuest();
+
+    if(!quest){
+        return;
+    }
+
+    quest.what =
+        document.getElementById(
+            "questWhat"
+        )?.value || "";
+
+    quest.deadline =
+        document.getElementById(
+            "questDeadline"
+        )?.value || "";
+
+    quest.location =
+        document.getElementById(
+            "questLocation"
+        )?.value || "";
+
+    quest.comments =
+        document.getElementById(
+            "questComments"
+        )?.value || "";
+
+    await saveState();
+
+    renderQuestData();
+}
+
+/* =========================================================
+   INVENTORY
+========================================================= */
+
+function selectInventoryCategory(category){
+
+    state.inventoryCategory =
+        category;
+
+    saveState();
+
+    document.querySelectorAll(
+        ".inventory-cat"
+    ).forEach(el => {
+
+        el.classList.toggle(
+            "active",
+            el.dataset.cat === category
+        );
+    });
+
+    renderInventory();
+}
+
+function renderInventory(){
+
+    const category =
+        state.inventoryCategory;
+
+    const title =
+        document.getElementById(
+            "inventoryTitle"
+        );
+
+    title.textContent =
+        category.toUpperCase();
+
+    const container =
+        document.getElementById(
+            "inventoryItems"
+        );
+
+    const items =
+        state.inventory[category] || [];
+
+    container.innerHTML = "";
+
+    if(!items.length){
+
+        container.innerHTML =
+            '<div class="empty">NO ENTRIES</div>';
+
+        return;
+    }
+
+    items.forEach(item => {
+
+        const row =
+            document.createElement(
+                "div"
+            );
+
+        row.className =
+            "inventory-item";
+
+        const condition =
+            Math.max(
+                0,
+                Math.min(
+                    100,
+                    Number(item.condition ?? 100)
+                )
+            );
+
+        row.innerHTML = `
+
+            <div class="inventory-main">
+
+                <div class="inventory-name">
+                    ${escapeHTML(
+                        item.name
+                    )}
+                </div>
+
+                <div class="inventory-condition">
+                    ${escapeHTML(
+                        item.state || "STATE UNKNOWN"
+                    )}
+                    · ${condition}%
+                </div>
+
+                <div class="condition-bar">
+                    <div
+                        class="condition-fill"
+                        style="width:${condition}%">
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="inventory-item-actions">
+
+                <button
+                    onclick="removeInventoryItem('${item.id}')">
+                    X
+                </button>
+
+            </div>
+        `;
+
+        container.appendChild(row);
+    });
+}
+
+async function addInventoryItem(){
+
+    const name =
+        document.getElementById(
+            "inventoryName"
+        ).value.trim();
+
+    const condition =
+        Number(
+            document.getElementById(
+                "inventoryCondition"
+            ).value || 100
+        );
+
+    const itemState =
+        document.getElementById(
+            "inventoryState"
+        ).value.trim();
+
+    if(!name){
+        return;
+    }
+
+    const category =
+        state.inventoryCategory;
+
+    state.inventory[category].push({
+
+        id:uid(),
+
+        name,
+
+        condition:
+            Math.max(
+                0,
+                Math.min(
+                    100,
+                    condition
+                )
+            ),
+
+        state:itemState
+    });
+
+    document.getElementById(
+        "inventoryName"
+    ).value = "";
+
+    document.getElementById(
+        "inventoryState"
+    ).value = "";
+
+    document.getElementById(
+        "inventoryCondition"
+    ).value = "100";
+
+    await saveState();
+
+    renderInventory();
+}
+
+async function removeInventoryItem(id){
+
+    const category =
+        state.inventoryCategory;
+
+    state.inventory[category] =
+        state.inventory[category].filter(
+            item =>
+                item.id !== id
+        );
+
+    await saveState();
+
+    renderInventory();
+}
+
+/* =========================================================
+   STATS
+========================================================= */
+
+const bigFiveNames = [
+    "OPENNESS",
+    "CONSCIENTIOUSNESS",
+    "EXTRAVERSION",
+    "AGREEABLENESS",
+    "NEUROTICISM"
+];
+
+function renderStats(){
+
+    renderBigFive();
+
+    renderMetaPrograms();
+
+    document.getElementById(
+        "sacredWound"
+    ).value =
+        state.sacredWound || "";
+
+    document.getElementById(
+        "contradictionA"
+    ).value =
+        state.contradictionA || "";
+
+    document.getElementById(
+        "contradictionB"
+    ).value =
+        state.contradictionB || "";
+}
+
+function renderBigFive(){
+
+    const controls =
+        document.getElementById(
+            "bigFiveControls"
+        );
+
+    controls.innerHTML = "";
+
+    bigFiveNames.forEach(
+        (name,index) => {
+
+            const value =
+                Number(
+                    state.bigFive[index] || 0
+                );
+
+            const row =
+                document.createElement(
+                    "div"
+                );
+
+            row.className =
+                "stat-slider";
+
+            row.innerHTML = `
+
+                <label>${name}</label>
+
+                <input
+                    type="range"
+                    min="0"
+                    max="100"
+                    value="${value}"
+                    oninput="
+                        state.bigFive[${index}]
+                        = Number(this.value);
+                        updateRadar();
+                        this.nextElementSibling.textContent
+                        = this.value;
+                        saveState();
+                    "
+                >
+
+                <output>${value}</output>
+            `;
+
+            controls.appendChild(row);
+        }
+    );
+
+    updateRadar();
+}
+
+function updateRadar(){
+
+    const svg =
+        document.getElementById(
+            "radar"
+        );
+
+    const cx = 110;
+    const cy = 110;
+    const radius = 78;
+
+    const points =
+        [];
+
+    const values =
+        state.bigFive;
+
+    for(
+        let i=0;
+        i<5;
+        i++
+    ){
+
+        const angle =
+            -Math.PI/2 +
+            i * (Math.PI*2/5);
+
+        const x =
+            cx +
+            radius *
+            (values[i]/100) *
+            Math.cos(angle);
+
+        const y =
+            cy +
+            radius *
+            (values[i]/100) *
+            Math.sin(angle);
+
+        points.push(
+            `${x},${y}`
+        );
+    }
+
+    let html = "";
+
+    [25,50,75,100].forEach(
+        level => {
+
+            const pts=[];
+
+            for(
+                let i=0;
+                i<5;
+                i++
+            ){
+
+                const angle =
+                    -Math.PI/2 +
+                    i*(Math.PI*2/5);
+
+                const r =
+                    radius *
+                    level/100;
+
+                pts.push(
+                    `${cx+r*Math.cos(angle)},
+                     ${cy+r*Math.sin(angle)}`
+                );
+            }
+
+            html += `
+                <polygon
+                    class="grid"
+                    points="${pts.join(" ")}">
+                </polygon>
+            `;
+        }
+    );
+
+    for(
+        let i=0;
+        i<5;
+        i++
+    ){
+
+        const angle =
+            -Math.PI/2 +
+            i*(Math.PI*2/5);
+
+        const x =
+            cx +
+            radius *
+            Math.cos(angle);
+
+        const y =
+            cy +
+            radius *
+            Math.sin(angle);
+
+        html += `
+            <line
+                x1="${cx}"
+                y1="${cy}"
+                x2="${x}"
+                y2="${y}">
+            </line>
+        `;
+    }
+
+    html += `
+        <polygon
+            class="data"
+            points="${points.join(" ")}">
+        </polygon>
+    `;
+
+    bigFiveNames.forEach(
+        (name,i) => {
+
+            const angle =
+                -Math.PI/2 +
+                i*(Math.PI*2/5);
+
+            const r =
+                radius + 17;
+
+            const x =
+                cx +
+                r*Math.cos(angle);
+
+            const y =
+                cy +
+                r*Math.sin(angle);
+
+            html += `
+                <text
+                    x="${x}"
+                    y="${y}"
+                    text-anchor="middle"
+                    dominant-baseline="middle">
+                    ${name[0]}
+                </text>
+            `;
+        }
+    );
+
+    svg.innerHTML =
+        html;
+}
+
+function renderMetaPrograms(){
+
+    const container =
+        document.getElementById(
+            "metaControls"
+        );
+
+    container.innerHTML = "";
+
+    state.metaPrograms.forEach(
+        (meta,index) => {
+
+            const row =
+                document.createElement(
+                    "div"
+                );
+
+            row.className =
+                "meta-row";
+
+            row.innerHTML = `
+
+                <div class="meta-label">
+                    ${escapeHTML(
+                        meta.left
+                    )}
+                </div>
+
+                <input
+                    type="range"
+                    min="0"
+                    max="100"
+                    value="${meta.value}"
+                    oninput="
+                        state.metaPrograms[${index}]
+                        .value = Number(this.value);
+                        saveState();
+                    "
+                >
+
+                <div class="meta-label right">
+                    ${escapeHTML(
+                        meta.right
+                    )}
+                </div>
+            `;
+
+            container.appendChild(row);
+        }
+    );
+}
+
+function saveStats(){
+
+    state.sacredWound =
+        document.getElementById(
+            "sacredWound"
+        ).value;
+
+    state.contradictionA =
+        document.getElementById(
+            "contradictionA"
+        ).value;
+
+    state.contradictionB =
+        document.getElementById(
+            "contradictionB"
+        ).value;
+
+    saveState();
+}
+
+/* =========================================================
+   HEALTH
+========================================================= */
+
+const zoneNames = {
+
+    head:"HEAD",
+
+    eyes:"EYES",
+
+    chest:"CHEST",
+
+    abdomen:"ABDOMEN",
+
+    leftArm:"LEFT ARM",
+
+    rightArm:"RIGHT ARM",
+
+    leftLeg:"LEFT LEG",
+
+    rightLeg:"RIGHT LEG"
+};
+
+function healthLevel(count){
+
+    if(count >= 3){
+        return "danger";
+    }
+
+    if(count >= 1){
+        return "warning";
+    }
+
+    return "neutral";
+}
+
+function renderHealth(){
+
+    Object.keys(
+        state.health
+    ).forEach(zone => {
+
+        const element =
+            document.getElementById(
+                "zone-" + zone
+            );
+
+        if(!element){
+            return;
+        }
+
+        const count =
+            state.health[zone]?.length || 0;
+
+        element.classList.remove(
+            "neutral",
+            "warning",
+            "danger"
+        );
+
+        element.classList.add(
+            healthLevel(count)
+        );
+    });
+
+    const container =
+        document.getElementById(
+            "healthNotesList"
+        );
+
+    container.innerHTML = "";
+
+    Object.keys(
+        state.health
+    ).forEach(zone => {
+
+        const entries =
+            state.health[zone] || [];
+
+        const box =
+            document.createElement(
+                "div"
+            );
+
+        box.className =
+            "zone-summary" +
+            (
+                state.selectedHealthZone === zone
+                    ? " selected"
+                    : ""
+            );
+
+        box.onclick = () => {
+
+            state.selectedHealthZone =
+                zone;
+
+            renderHealth();
+        };
+
+        let entriesHTML = "";
+
+        if(
+            state.selectedHealthZone === zone
+            &&
+            entries.length
+        ){
+
+            entriesHTML =
+                entries.map(
+                    entry => `
+
+                        <div class="health-entry">
+
+                            <div class="health-entry-text">
+                                ${escapeHTML(
+                                    entry.text
+                                )}
+                            </div>
+
+                            <div class="health-entry-actions">
+
+                                <button
+                                    onclick="
+                                        editHealthEntry(
+                                            '${zone}',
+                                            '${entry.id}'
+                                        );
+                                        event.stopPropagation();
+                                    ">
+                                    EDIT
+                                </button>
+
+                                <button
+                                    onclick="
+                                        deleteHealthEntry(
+                                            '${zone}',
+                                            '${entry.id}'
+                                        );
+                                        event.stopPropagation();
+                                    ">
+                                    DELETE
+                                </button>
+
+                            </div>
+
+                        </div>
+                    `
+                ).join("");
+        }
+
+        box.innerHTML = `
+
+            <div class="zone-summary-header">
+
+                <span>
+                    ${zoneNames[zone]}
+                </span>
+
+                <span class="zone-count">
+                    ${entries.length}
+                </span>
+
+            </div>
+
+            ${entriesHTML}
+        `;
+
+        container.appendChild(box);
+    });
+
+    const input =
+        document.getElementById(
+            "healthQuickInput"
+        );
+
+    if(state.selectedHealthZone){
+
+        input.placeholder =
+            "Add to " +
+            zoneNames[
+                state.selectedHealthZone
+            ];
+
+    }else{
+
+        input.placeholder =
+            "Select a body zone first...";
+    }
+}
+
+function openHealthZone(zone){
+
+    state.selectedHealthZone =
+        zone;
+
+    renderHealth();
+
+    document.getElementById(
+        "healthQuickInput"
+    ).focus();
+}
+
+async function addHealthEntry(){
+
+    const zone =
+        state.selectedHealthZone;
+
+    if(!zone){
+
+        alert(
+            "SELECT A BODY ZONE FIRST"
+        );
+
+        return;
+    }
+
+    const input =
+        document.getElementById(
+            "healthQuickInput"
+        );
+
+    const text =
+        input.value.trim();
+
+    if(!text){
+        return;
+    }
+
+    state.health[zone].push({
+
+        id:uid(),
+
+        text,
+
+        createdAt:
+            new Date().toISOString()
+    });
+
+    input.value = "";
+
+    await saveState();
+
+    renderHealth();
+}
+
+async function deleteHealthEntry(
+    zone,
+    id
+){
+
+    state.health[zone] =
+        state.health[zone].filter(
+            entry =>
+                entry.id !== id
+        );
+
+    await saveState();
+
+    renderHealth();
+}
+
+async function editHealthEntry(
+    zone,
+    id
+){
+
+    const entry =
+        state.health[zone].find(
+            e =>
+                e.id === id
+        );
+
+    if(!entry){
+        return;
+    }
+
+    const value =
+        prompt(
+            "EDIT HEALTH ENTRY",
+            entry.text
+        );
+
+    if(value === null){
+        return;
+    }
+
+    const text =
+        value.trim();
+
+    if(!text){
+        return;
+    }
+
+    entry.text =
+        text;
+
+    await saveState();
+
+    renderHealth();
+}
+
+/* =========================================================
+   NOTES
+========================================================= */
+
+function renderNotes(){
+
+    const list =
+        document.getElementById(
+            "notesList"
+        );
+
+    list.innerHTML = "";
+
+    if(!state.notes.length){
+
+        list.innerHTML =
+            '<div class="empty">NO NOTES</div>';
+
+    }else{
+
+        state.notes.forEach(note => {
+
+            const row =
+                document.createElement(
+                    "div"
+                );
+
+            row.className =
+                "note-row" +
+                (
+                    note.id === state.selectedNote
+                        ? " selected"
+                        : ""
+                );
+
+            row.onclick = () => {
+
+                state.selectedNote =
+                    note.id;
+
+                saveState();
+
+                renderNotes();
+            };
+
+            row.innerHTML = `
+
+                <div class="note-title">
+                    ${escapeHTML(
+                        note.title ||
+                        "UNTITLED"
+                    )}
+                </div>
+
+                <div class="note-preview">
+                    ${escapeHTML(
+                        note.body ||
+                        "EMPTY"
+                    )}
+                </div>
+            `;
+
+            list.appendChild(row);
+        });
+    }
+
+    renderNoteEditor();
+}
+
+function renderNoteEditor(){
+
+    const editor =
+        document.getElementById(
+            "noteEditor"
+        );
+
+    const note =
+        state.notes.find(
+            n =>
+                n.id ===
+                state.selectedNote
+        );
+
+    if(!note){
+
+        editor.innerHTML =
+            `
+            <div class="empty">
+                SELECT A NOTE<br><br>
+                OR CREATE A NEW ONE
+            </div>
+            `;
+
+        return;
+    }
+
+    editor.innerHTML = `
+
+        <input
+            id="noteTitleInput"
+            value="${escapeAttribute(
+                note.title || ""
+            )}"
+            placeholder="NOTE TITLE"
+        >
+
+        <textarea
+            id="noteBodyInput"
+            placeholder="WRITE..."
+        >${escapeHTML(
+            note.body || ""
+        )}</textarea>
+
+        <div class="note-editor-actions">
+
+            <button onclick="saveCurrentNote()">
+                SAVE
+            </button>
+
+        </div>
+    `;
+}
+
+async function addNote(){
+
+    const note = {
+
+        id:uid(),
+
+        title:"New note",
+
+        body:"",
+
+        createdAt:
+            new Date().toISOString()
+    };
+
+    state.notes.unshift(
+        note
+    );
+
+    state.selectedNote =
+        note.id;
+
+    await saveState();
+
+    renderNotes();
+}
+
+async function saveCurrentNote(){
+
+    const note =
+        state.notes.find(
+            n =>
+                n.id ===
+                state.selectedNote
+        );
+
+    if(!note){
+        return;
+    }
+
+    note.title =
+        document.getElementById(
+            "noteTitleInput"
+        ).value.trim();
+
+    note.body =
+        document.getElementById(
+            "noteBodyInput"
+        ).value;
+
+    await saveState();
+
+    renderNotes();
+}
+
+async function deleteSelectedNote(){
+
+    if(!state.selectedNote){
+        return;
+    }
+
+    const note =
+        state.notes.find(
+            n =>
+                n.id ===
+                state.selectedNote
+        );
+
+    if(
+        note &&
+        !confirm(
+            `DELETE NOTE "${note.title}"?`
+        )
+    ){
+        return;
+    }
+
+    state.notes =
+        state.notes.filter(
+            n =>
+                n.id !==
+                state.selectedNote
+        );
+
+    state.selectedNote =
+        state.notes[0]?.id ||
+        null;
+
+    await saveState();
+
+    renderNotes();
+}
+
+/* =========================================================
+   EXPORT / IMPORT
+========================================================= */
+
+function exportData(){
+
+    const payload = {
+
+        format:"PIP BOY 1998",
+
+        version:1,
+
+        exportedAt:
+            new Date().toISOString(),
+
+        state
+    };
+
+    const json =
+        JSON.stringify(
+            payload,
+            null,
+            2
+        );
+
+    const blob =
+        new Blob(
+            [json],
+            {
+                type:
+                    "application/json"
+            }
+        );
+
+    const url =
+        URL.createObjectURL(
+            blob
+        );
+
+    const a =
+        document.createElement(
+            "a"
+        );
+
+    a.href = url;
+
+    a.download =
+        "pip-boy-1998-backup.json";
+
+    document.body.appendChild(a);
+
+    a.click();
+
+    a.remove();
+
+    setTimeout(
+        () =>
+            URL.revokeObjectURL(url),
+        1000
+    );
+}
+
+function setupImport(){
+
+    document.getElementById(
+        "importFile"
+    ).addEventListener(
+        "change",
+        handleImport
+    );
+}
+
+async function handleImport(event){
+
+    const file =
+        event.target.files[0];
+
+    if(!file){
+        return;
+    }
+
+    try{
+
+        const text =
+            await file.text();
+
+        const payload =
+            JSON.parse(text);
+
+        const imported =
+            payload.state ||
+            payload;
+
+        if(
+            !imported ||
+            typeof imported !==
+            "object"
+        ){
+
+            throw new Error(
+                "Invalid backup"
+            );
+        }
+
+        if(
+            !confirm(
+                "IMPORT THIS BACKUP AND REPLACE CURRENT DATA?"
+            )
+        ){
+            event.target.value = "";
+
+            return;
+        }
+
+        state =
+            deepMergeState(
+                imported
+            );
+
+        if(
+            !state.selectedQuest &&
+            state.quests.length
+        ){
+
+            state.selectedQuest =
+                state.quests[0].id;
+        }
+
+        await saveState();
+
+        renderAll();
+
+        alert(
+            "PIP BOY DATA IMPORTED"
+        );
+
+    }
+    catch(error){
+
+        console.error(error);
+
+        alert(
+            "IMPORT FAILED: INVALID JSON BACKUP"
+        );
+    }
+
+    event.target.value = "";
+}
+
+/* =========================================================
+   RENDER
+========================================================= */
+
+function renderAll(){
+
+    renderQuests();
+
+    renderQuestData();
+
+    renderInventory();
+
+    renderStats();
+
+    renderHealth();
+
+    renderNotes();
+
+    document.querySelectorAll(
+        ".inventory-cat"
+    ).forEach(el => {
+
+        el.classList.toggle(
+            "active",
+            el.dataset.cat ===
+            state.inventoryCategory
+        );
+    });
+}
+
+/* =========================================================
+   UTILITIES
+========================================================= */
+
+function escapeHTML(value){
+
+    return String(
+        value ?? ""
+    )
+    .replaceAll(
+        "&",
+        "&amp;"
+    )
+    .replaceAll(
+        "<",
+        "&lt;"
+    )
+    .replaceAll(
+        ">",
+        "&gt;"
+    )
+    .replaceAll(
+        '"',
+        "&quot;"
+    )
+    .replaceAll(
+        "'",
+        "&#039;"
+    );
+}
+
+function escapeAttribute(value){
+
+    return escapeHTML(
+        value
+    );
+}
+
+/* =========================================================
+   MODAL / KEYBOARD
+========================================================= */
+
+document.getElementById(
+    "questModal"
+).addEventListener(
+    "click",
+    event => {
+
+        if(
+            event.target.id ===
+            "questModal"
+        ){
+
+            closeQuestModal();
+        }
+    }
+);
+
+document.addEventListener(
+    "keydown",
+    event => {
+
+        if(event.key === "Escape"){
+
+            closeQuestModal();
+        }
+    }
+);
+</script>
+
+</body>
+</html>
