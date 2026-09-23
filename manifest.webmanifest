@@ -1,0 +1,20 @@
+{
+  "name": "PIP BOY 1998",
+  "short_name": "PIP BOY 1998",
+  "description": "Personal operating system",
+  "start_url": "./index.html",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "landscape",
+  "background_color": "#050b07",
+  "theme_color": "#07100b",
+  "lang": "en",
+  "icons": [
+    {
+      "src": "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 512 512'%3E%3Crect width='512' height='512' fill='%23050b07'/%3E%3Crect x='38' y='38' width='436' height='436' rx='25' fill='%2309140d' stroke='%2363ff82' stroke-width='18'/%3E%3Ctext x='256' y='330' text-anchor='middle' font-family='monospace' font-size='270' font-weight='bold' fill='%2363ff82'%3EP%3C/text%3E%3C/svg%3E",
+      "sizes": "512x512",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ]
+}
